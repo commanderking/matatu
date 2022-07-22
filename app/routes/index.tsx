@@ -1,40 +1,80 @@
 import { Link } from "@remix-run/react";
+import VehicleWheel from "~/components/VehicleWheel";
+import Seat from "~/components/Seat";
+import RowOfSeats from "~/components/RowOfSeats";
 
 import { useOptionalUser } from "~/utils";
+import {
+  vehicleWidth,
+  wheelWidth,
+  seatWidth,
+  seatHeight,
+} from "app/constants/vehicle";
 
 export default function Index() {
   const user = useOptionalUser();
 
-  const van = [
-    [
-      {
-        seat: 2,
-      },
-      { seat: 1 },
-    ],
-    [
-      {
-        seat: 3,
-      },
-      { seat: 2 },
-      { seat: 1 },
-    ],
-    [{ seat: 3 }, { seat: 2 }, { seat: 1 }],
-  ];
+  const svgHeight = 350;
+  const svgWidth = 200;
+
+  const vehicleFrontHeight = 100;
+  const vehicleBaseHeight = 220;
+  const vehicleBaseYOffset = vehicleFrontHeight - 10;
+  const centerVehicleX = (svgWidth - vehicleWidth) / 2;
+
+  const seatRowSpacing = 10;
 
   return (
-    <div className="w-96">
-      {van.map((row) => {
-        return (
-          <div className="flex flex-row">
-            {row.map((seat) => (
-              <div className="inline-block grow border border-black text-center">
-                {seat.seat}
-              </div>
-            ))}
-          </div>
-        );
-      })}
+    <div>
+      <svg height={svgHeight} width={svgWidth}>
+        <VehicleWheel x={centerVehicleX - wheelWidth / 2} y={35} />
+        <VehicleWheel
+          x={centerVehicleX + vehicleWidth - wheelWidth / 2}
+          y={35}
+        />
+        <VehicleWheel
+          x={centerVehicleX - wheelWidth / 2}
+          y={vehicleBaseYOffset + vehicleBaseHeight - 80}
+        />
+        <VehicleWheel
+          x={centerVehicleX + vehicleWidth - wheelWidth / 2}
+          y={vehicleBaseYOffset + vehicleBaseHeight - 80}
+        />
+        <rect
+          id="vehicle-front"
+          x={centerVehicleX}
+          width={vehicleWidth}
+          y={5}
+          height={vehicleFrontHeight}
+          rx={40}
+          ry={20}
+          className="fill-white stroke-black stroke-2"
+        ></rect>
+
+        <rect
+          id="vehicle-base"
+          x={centerVehicleX}
+          y={vehicleBaseYOffset}
+          width={vehicleWidth}
+          height={vehicleBaseHeight}
+          className="fill-white stroke-black stroke-2"
+        />
+        <Seat x={centerVehicleX + 10} y={vehicleBaseYOffset + 20} />
+        <Seat
+          x={centerVehicleX + vehicleWidth - seatWidth - 10}
+          y={vehicleBaseYOffset + 20}
+        />
+        <RowOfSeats
+          x={centerVehicleX + seatRowSpacing}
+          y={vehicleBaseYOffset + 2 * seatHeight}
+          seatsPerRow={4}
+        />
+        <RowOfSeats
+          x={centerVehicleX + 10}
+          y={vehicleBaseYOffset + seatHeight * 3 + 10}
+          seatsPerRow={3}
+        />
+      </svg>
     </div>
   );
   // return (
