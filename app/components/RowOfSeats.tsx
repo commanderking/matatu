@@ -1,5 +1,5 @@
 import Seat from "~/components/Seat";
-import { seatHeight, seatWidth } from "app/constants/vehicle";
+import { seatRowWidth } from "app/constants/vehicle";
 
 type Props = {
   x: number;
@@ -8,10 +8,11 @@ type Props = {
 };
 
 const RowOfSeats = ({ seatsPerRow, x, y }: Props) => {
+  const seatWidth = seatRowWidth / seatsPerRow;
   return (
     <g x={x} y={y}>
       {[...Array(seatsPerRow)].map((seat, index) => {
-        return <Seat x={x + index * seatWidth} y={y} />;
+        return <Seat x={x + index * seatWidth} y={y} width={seatWidth} />;
       })}
     </g>
   );

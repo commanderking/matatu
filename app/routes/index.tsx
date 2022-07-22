@@ -4,7 +4,12 @@ import Seat from "~/components/Seat";
 import RowOfSeats from "~/components/RowOfSeats";
 
 import { useOptionalUser } from "~/utils";
-import { wheelWidth, seatWidth, seatHeight } from "app/constants/vehicle";
+import {
+  vehicleWidth,
+  wheelWidth,
+  seatWidth,
+  seatHeight,
+} from "app/constants/vehicle";
 
 export default function Index() {
   const user = useOptionalUser();
@@ -12,7 +17,6 @@ export default function Index() {
   const svgHeight = 350;
   const svgWidth = 200;
 
-  const vehicleWidth = 150;
   const vehicleFrontHeight = 100;
   const vehicleBaseHeight = 220;
   const vehicleBaseYOffset = vehicleFrontHeight - 10;
@@ -61,12 +65,12 @@ export default function Index() {
           y={vehicleBaseYOffset + 20}
         />
         <RowOfSeats
-          x={centerVehicleX + seatRowSpacing + 2.5}
+          x={centerVehicleX + seatRowSpacing}
           y={vehicleBaseYOffset + 2 * seatHeight}
-          seatsPerRow={3}
+          seatsPerRow={4}
         />
         <RowOfSeats
-          x={centerVehicleX + 10 + 2.5}
+          x={centerVehicleX + 10}
           y={vehicleBaseYOffset + seatHeight * 3 + 10}
           seatsPerRow={3}
         />
