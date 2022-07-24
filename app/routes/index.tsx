@@ -46,12 +46,12 @@ export default function Index() {
   console.log({ formattedData });
 
   return (
-    <div>
+    <div className="text-center">
       {formattedData.map((trip) => {
         return (
-          <div>
+          <div key={trip.id}>
             <h3 className="text-2xl">{trip.displayDate}</h3>
-            <svg height={svgHeight} width={svgWidth}>
+            <svg className="m-auto" height={svgHeight} width={svgWidth}>
               <VehicleWheel x={centerVehicleX - wheelWidth / 2} y={35} />
               <VehicleWheel
                 x={centerVehicleX + vehicleWidth - wheelWidth / 2}
@@ -84,20 +84,30 @@ export default function Index() {
                 height={vehicleBaseHeight}
                 className="fill-white stroke-black stroke-2"
               />
-              <Seat x={centerVehicleX + 10} y={vehicleBaseYOffset + 20} />
+              <Seat
+                x={centerVehicleX + 10}
+                y={vehicleBaseYOffset + 20}
+                image={trip.seatMap["1-2"].rider.profileSrc}
+              />
               <Seat
                 x={centerVehicleX + vehicleWidth - seatWidth - 10}
                 y={vehicleBaseYOffset + 20}
+                image={trip.seatMap["1-1"].rider.profileSrc}
+              />
+              <Seat
+                x={centerVehicleX + 10 + 5 + seatWidth}
+                y={vehicleBaseYOffset + 35}
+                image={trip.seatMap["1-3"]?.rider?.profileSrc}
               />
               <RowOfSeats
                 x={centerVehicleX + seatRowSpacing}
                 y={vehicleBaseYOffset + 2 * seatHeight}
-                seatsPerRow={4}
+                seats={trip.seatsByRow.rowTwo}
               />
               <RowOfSeats
                 x={centerVehicleX + 10}
                 y={vehicleBaseYOffset + seatHeight * 3 + 10}
-                seatsPerRow={3}
+                seats={trip.seatsByRow.rowThree}
               />
             </svg>
           </div>

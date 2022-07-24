@@ -1,25 +1,45 @@
 import _ from "lodash";
-import { Trips, Seat } from "app/models/trip.server";
+import type { Trips, Seat } from "app/models/trip.server";
 
-const vehicles = {
-  "KAT480S-3": {
-    id: "KAT480S-3",
-    description: "Only 3 seats per row needed",
-  },
-  "KAT480S-4": {
-    id: "KAT480S-4",
-    description: "Only 4 seats per row needed",
-  },
-};
+// const getSeatingDetails = (seats: Seat[]) => {
+//   const rowTwoFourSeats = seats.find(
+//     (seat) => seat.row === 2 && seat.seat === 4
+//   );
+//   const rowThreeFourSeats = seats.find(
+//     (seat) => seat.row === 3 && seat.seat === 4
+//   );
 
-const getVehicleType = (seats: Seat[]) => {
-  const hasFourSeats = seats.find((seat) => seat.seat === 4);
+//   return {
+//     rowTwo: rowTwoFourSeats ? 4 : 3,
+//     rowThree: rowThreeFourSeats ? 4 : 3,
+//   };
+// };
 
-  if (hasFourSeats) {
-    return vehicles["KAT480S-4"].id;
-  }
+const getSeatsByRow = (trip: Trips[number]) => {
+  const { seats } = trip;
+  const rowTwo = seats
+    .filter((seat) => seat.row === 2)
+    .sort((a, b) => b.seat - a.seat);
+  const rowThree = seats
+    .filter((seat) => seat.row === 3)
+    .sort((a, b) => b.seat - a.seat);
 
-  return vehicles["KAT480S-3"].id;
+  const rowTwoSeatsDisplayed =
+    rowTwo.length === 4 ? ["2-4", "2-3", "2-2", "2-1"] : ["2-3", "2-2", "2-1"];
+  const rowThreeSeatsDisplayed =
+    rowThree.length === 4
+      ? ["3-4", "3-3", "3-2", "3-1"]
+      : ["3-3", "3-2", "3-1"];
+
+  const seatMap = getSeatMap(trip);
+  return {
+    rowTwo: rowTwoSeatsDisplayed.map((seatId) => {
+      return seatMap[seatId] || null;
+    }),
+    rowThree: rowThreeSeatsDisplayed.map((seatId) => {
+      return seatMap[seatId] || null;
+    }),
+  };
 };
 
 const getDisplayDate = (trip: Trips[number]) => {
@@ -46,12 +66,11 @@ const getSeatMap = (trip: Trips[number]) => {
 
 export const processTripsForVehicleVisualization = (trips: Trips) => {
   return trips.map((trip) => {
-    const vehicleType = getVehicleType(trip.seats);
     return {
       ...trip,
-      vehicleType,
       displayDate: getDisplayDate(trip),
       seatMap: getSeatMap(trip),
+      seatsByRow: getSeatsByRow(trip),
     };
   });
 };

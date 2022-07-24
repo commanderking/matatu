@@ -44,8 +44,9 @@ const seats = [
     {
       riderName: "Jeffrey",
       row: 3,
-      seat: 1,
+      seat: 3,
     },
+    { riderName: "Chase", row: 3, seat: 1 },
   ],
   [
     {
