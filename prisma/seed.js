@@ -3,8 +3,6 @@ const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 const { riders } = require("./seedConstants.js");
 
-console.log({ riders });
-
 const prisma = new PrismaClient();
 
 const trips = [
@@ -117,16 +115,10 @@ async function seed() {
   });
 
   const availableRiders = await Promise.all(riderCreates);
-
   const ridersByName = _.keyBy(availableRiders, "firstName");
-
-  console.log({ availableRiders });
-  console.log({ ridersByName });
-
   const trip = await prisma.trip.create({ data: trips[0] });
 
   const tripOneCreates = seats[0].map((seat) => {
-    console.log(seat.riderName);
     return prisma.seat.create({
       data: {
         ...seat,
@@ -139,7 +131,6 @@ async function seed() {
   const tripTwo = await prisma.trip.create({ data: trips[1] });
 
   const tripTwoCreates = seats[1].map((seat) => {
-    console.log(seat.riderName);
     return prisma.seat.create({
       data: {
         ...seat,
@@ -151,9 +142,6 @@ async function seed() {
 
   const seatsSaved = await Promise.all(tripOneCreates);
   const seatsSavedTwo = await Promise.all(tripTwoCreates);
-
-  console.log({ seatsSaved });
-  console.log({ seatsSavedTwo });
 
   console.log(`Database has been seeded. 🌱`);
 }
