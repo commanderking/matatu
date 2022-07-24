@@ -2,6 +2,10 @@ import { Link } from "@remix-run/react";
 import VehicleWheel from "~/components/VehicleWheel";
 import Seat from "~/components/Seat";
 import RowOfSeats from "~/components/RowOfSeats";
+import { getTrips } from "~/models/trip.server";
+import { json, redirect } from "@remix-run/node";
+import type { ActionArgs, LoaderArgs } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 
 import { useOptionalUser } from "~/utils";
 import {
@@ -11,8 +15,20 @@ import {
   seatHeight,
 } from "app/constants/vehicle";
 
+export async function loader({ request, params }: LoaderArgs) {
+  const trips = await getTrips();
+  if (!trips) {
+    throw new Response("Not Found", { status: 404 });
+  }
+
+  return json({ trips });
+}
+
 export default function Index() {
   const user = useOptionalUser();
+  const { trips } = useLoaderData<typeof loader>();
+
+  console.log({ trips });
 
   const svgHeight = 350;
   const svgWidth = 200;
