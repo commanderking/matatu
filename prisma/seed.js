@@ -1,11 +1,18 @@
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
+const _ = require("lodash");
+const { riders } = require("./seedConstants.js");
+
+console.log({ riders });
 
 const prisma = new PrismaClient();
 
 const trips = [
   {
     dateTime: "2022-07-20T05:15:30.000Z",
+  },
+  {
+    dateTime: "2022-07-20T08:15:30.000Z",
   },
 ];
 
@@ -39,6 +46,28 @@ const seats = [
     {
       riderName: "Jeffrey",
       row: 3,
+      seat: 1,
+    },
+  ],
+  [
+    {
+      riderName: "Peter",
+      row: 1,
+      seat: 1,
+    },
+    {
+      riderName: "Jossy",
+      row: 1,
+      seat: 3,
+    },
+    {
+      riderName: "Steven",
+      row: 1,
+      seat: 2,
+    },
+    {
+      riderName: "Wilson",
+      row: 2,
       seat: 1,
     },
   ],
@@ -81,18 +110,50 @@ async function seed() {
     },
   });
 
+  const riderCreates = riders.map((rider) => {
+    return prisma.rider.create({
+      data: rider,
+    });
+  });
+
+  const availableRiders = await Promise.all(riderCreates);
+
+  const ridersByName = _.keyBy(availableRiders, "firstName");
+
+  console.log({ availableRiders });
+  console.log({ ridersByName });
+
   const trip = await prisma.trip.create({ data: trips[0] });
 
-  const promises = seats[0].map((seat) => {
+  const tripOneCreates = seats[0].map((seat) => {
+    console.log(seat.riderName);
     return prisma.seat.create({
       data: {
         ...seat,
+        riderId: ridersByName[seat.riderName].id,
         tripId: trip.id,
       },
     });
   });
 
-  await Promise.all(promises);
+  const tripTwo = await prisma.trip.create({ data: trips[1] });
+
+  const tripTwoCreates = seats[1].map((seat) => {
+    console.log(seat.riderName);
+    return prisma.seat.create({
+      data: {
+        ...seat,
+        riderId: ridersByName[seat.riderName].id,
+        tripId: tripTwo.id,
+      },
+    });
+  });
+
+  const seatsSaved = await Promise.all(tripOneCreates);
+  const seatsSavedTwo = await Promise.all(tripTwoCreates);
+
+  console.log({ seatsSaved });
+  console.log({ seatsSavedTwo });
 
   console.log(`Database has been seeded. 🌱`);
 }

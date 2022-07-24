@@ -15,6 +15,8 @@ import {
   seatHeight,
 } from "app/constants/vehicle";
 
+import { processTripsForVehicleVisualization } from "app/utils/trip";
+
 export async function loader({ request, params }: LoaderArgs) {
   const trips = await getTrips();
   if (!trips) {
@@ -28,8 +30,6 @@ export default function Index() {
   const user = useOptionalUser();
   const { trips } = useLoaderData<typeof loader>();
 
-  console.log({ trips });
-
   const svgHeight = 350;
   const svgWidth = 200;
 
@@ -40,57 +40,69 @@ export default function Index() {
 
   const seatRowSpacing = 10;
 
+  // @ts-ignore - dateTime - string is not Date;
+  const formattedData = processTripsForVehicleVisualization(trips);
+
+  console.log({ formattedData });
+
   return (
     <div>
-      <svg height={svgHeight} width={svgWidth}>
-        <VehicleWheel x={centerVehicleX - wheelWidth / 2} y={35} />
-        <VehicleWheel
-          x={centerVehicleX + vehicleWidth - wheelWidth / 2}
-          y={35}
-        />
-        <VehicleWheel
-          x={centerVehicleX - wheelWidth / 2}
-          y={vehicleBaseYOffset + vehicleBaseHeight - 80}
-        />
-        <VehicleWheel
-          x={centerVehicleX + vehicleWidth - wheelWidth / 2}
-          y={vehicleBaseYOffset + vehicleBaseHeight - 80}
-        />
-        <rect
-          id="vehicle-front"
-          x={centerVehicleX}
-          width={vehicleWidth}
-          y={5}
-          height={vehicleFrontHeight}
-          rx={40}
-          ry={20}
-          className="fill-white stroke-black stroke-2"
-        ></rect>
+      {formattedData.map((trip) => {
+        return (
+          <div>
+            <h3 className="text-2xl">{trip.displayDate}</h3>
+            <svg height={svgHeight} width={svgWidth}>
+              <VehicleWheel x={centerVehicleX - wheelWidth / 2} y={35} />
+              <VehicleWheel
+                x={centerVehicleX + vehicleWidth - wheelWidth / 2}
+                y={35}
+              />
+              <VehicleWheel
+                x={centerVehicleX - wheelWidth / 2}
+                y={vehicleBaseYOffset + vehicleBaseHeight - 80}
+              />
+              <VehicleWheel
+                x={centerVehicleX + vehicleWidth - wheelWidth / 2}
+                y={vehicleBaseYOffset + vehicleBaseHeight - 80}
+              />
+              <rect
+                id="vehicle-front"
+                x={centerVehicleX}
+                width={vehicleWidth}
+                y={5}
+                height={vehicleFrontHeight}
+                rx={40}
+                ry={20}
+                className="fill-white stroke-black stroke-2"
+              ></rect>
 
-        <rect
-          id="vehicle-base"
-          x={centerVehicleX}
-          y={vehicleBaseYOffset}
-          width={vehicleWidth}
-          height={vehicleBaseHeight}
-          className="fill-white stroke-black stroke-2"
-        />
-        <Seat x={centerVehicleX + 10} y={vehicleBaseYOffset + 20} />
-        <Seat
-          x={centerVehicleX + vehicleWidth - seatWidth - 10}
-          y={vehicleBaseYOffset + 20}
-        />
-        <RowOfSeats
-          x={centerVehicleX + seatRowSpacing}
-          y={vehicleBaseYOffset + 2 * seatHeight}
-          seatsPerRow={4}
-        />
-        <RowOfSeats
-          x={centerVehicleX + 10}
-          y={vehicleBaseYOffset + seatHeight * 3 + 10}
-          seatsPerRow={3}
-        />
-      </svg>
+              <rect
+                id="vehicle-base"
+                x={centerVehicleX}
+                y={vehicleBaseYOffset}
+                width={vehicleWidth}
+                height={vehicleBaseHeight}
+                className="fill-white stroke-black stroke-2"
+              />
+              <Seat x={centerVehicleX + 10} y={vehicleBaseYOffset + 20} />
+              <Seat
+                x={centerVehicleX + vehicleWidth - seatWidth - 10}
+                y={vehicleBaseYOffset + 20}
+              />
+              <RowOfSeats
+                x={centerVehicleX + seatRowSpacing}
+                y={vehicleBaseYOffset + 2 * seatHeight}
+                seatsPerRow={4}
+              />
+              <RowOfSeats
+                x={centerVehicleX + 10}
+                y={vehicleBaseYOffset + seatHeight * 3 + 10}
+                seatsPerRow={3}
+              />
+            </svg>
+          </div>
+        );
+      })}
     </div>
   );
   // return (

@@ -10,8 +10,22 @@ export async function getTrips() {
           riderName: true,
           row: true,
           seat: true,
+          rider: true,
         },
       },
     },
   });
 }
+
+export type Trips = Awaited<Promise<ReturnType<typeof getTrips>>>;
+
+export type Seat = {
+  riderName: string;
+  row: number;
+  seat: number;
+  rider: {
+    id: string;
+    firstName: string;
+    profileSrc: string;
+  };
+};

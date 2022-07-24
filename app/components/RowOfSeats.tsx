@@ -12,7 +12,14 @@ const RowOfSeats = ({ seatsPerRow, x, y }: Props) => {
   return (
     <g x={x} y={y}>
       {[...Array(seatsPerRow)].map((seat, index) => {
-        return <Seat x={x + index * seatWidth} y={y} width={seatWidth} />;
+        return (
+          <Seat
+            key={`seat-${index}`}
+            x={x + index * seatWidth}
+            y={y}
+            width={seatWidth}
+          />
+        );
       })}
     </g>
   );
