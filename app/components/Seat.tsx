@@ -16,7 +16,7 @@ const Seat = ({ id, x, y, width = seatWidth, image }: Props) => {
     <g>
       <rect
         id={id}
-        className="fill-white stroke-black stroke-1"
+        className="fill-white stroke-rose-700 stroke-1"
         x={x}
         y={y}
         width={width}

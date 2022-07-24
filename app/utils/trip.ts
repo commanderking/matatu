@@ -1,28 +1,10 @@
 import _ from "lodash";
 import type { Trips, Seat } from "app/models/trip.server";
 
-// const getSeatingDetails = (seats: Seat[]) => {
-//   const rowTwoFourSeats = seats.find(
-//     (seat) => seat.row === 2 && seat.seat === 4
-//   );
-//   const rowThreeFourSeats = seats.find(
-//     (seat) => seat.row === 3 && seat.seat === 4
-//   );
-
-//   return {
-//     rowTwo: rowTwoFourSeats ? 4 : 3,
-//     rowThree: rowThreeFourSeats ? 4 : 3,
-//   };
-// };
-
 const getSeatsByRow = (trip: Trips[number]) => {
   const { seats } = trip;
-  const rowTwo = seats
-    .filter((seat) => seat.row === 2)
-    .sort((a, b) => b.seat - a.seat);
-  const rowThree = seats
-    .filter((seat) => seat.row === 3)
-    .sort((a, b) => b.seat - a.seat);
+  const rowTwo = seats.filter((seat) => seat.row === 2);
+  const rowThree = seats.filter((seat) => seat.row === 3);
 
   const rowTwoSeatsDisplayed =
     rowTwo.length === 4 ? ["2-4", "2-3", "2-2", "2-1"] : ["2-3", "2-2", "2-1"];
