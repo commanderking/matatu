@@ -35,11 +35,10 @@ const Seat = ({ id, x, y, width = seatWidth, image }: Props) => {
             x={x}
             y={y}
             href={image}
-            width={width}
+            width={seatWidth}
             height={seatHeight}
             preserveAspectRatio="none"
             clipPath={`url(#circleView-${id})`}
-            // "url(#circleView)"
           />
         </g>
       )}

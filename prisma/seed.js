@@ -1,76 +1,11 @@
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
-const { riders } = require("./seedConstants.js");
+const { riders, trips, seats } = require("./seedConstants.js");
 
 const prisma = new PrismaClient();
 
-const trips = [
-  {
-    dateTime: "2022-07-20T05:15:30.000Z",
-  },
-  {
-    dateTime: "2022-07-20T08:15:30.000Z",
-  },
-];
-
-const seats = [
-  [
-    {
-      riderName: "Steven",
-      row: 1,
-      seat: 1,
-    },
-    {
-      riderName: "Aduon",
-      row: 1,
-      seat: 2,
-    },
-    {
-      riderName: "Jossy",
-      row: 2,
-      seat: 1,
-    },
-    {
-      riderName: "Yang",
-      row: 2,
-      seat: 2,
-    },
-    {
-      riderName: "Jack",
-      row: 2,
-      seat: 3,
-    },
-    {
-      riderName: "Jeffrey",
-      row: 3,
-      seat: 3,
-    },
-    { riderName: "Chase", row: 3, seat: 1 },
-  ],
-  [
-    {
-      riderName: "Peter",
-      row: 1,
-      seat: 1,
-    },
-    {
-      riderName: "Jossy",
-      row: 1,
-      seat: 3,
-    },
-    {
-      riderName: "Steven",
-      row: 1,
-      seat: 2,
-    },
-    {
-      riderName: "Wilson",
-      row: 2,
-      seat: 1,
-    },
-  ],
-];
+const seatsByTrip = _.groupBy(seats, "trip");
 
 async function seed() {
   const email = "rachel@remix.run";
@@ -117,32 +52,26 @@ async function seed() {
 
   const availableRiders = await Promise.all(riderCreates);
   const ridersByName = _.keyBy(availableRiders, "firstName");
-  const trip = await prisma.trip.create({ data: trips[0] });
 
-  const tripOneCreates = seats[0].map((seat) => {
-    return prisma.seat.create({
-      data: {
-        ...seat,
-        riderId: ridersByName[seat.riderName].id,
-        tripId: trip.id,
-      },
-    });
-  });
+  const createTripsAndSeats = async () => {
+    for (const trip of trips) {
+      const savedTrip = await prisma.trip.create({
+        data: _.pick(trip, ["dateTime"]),
+      });
 
-  const tripTwo = await prisma.trip.create({ data: trips[1] });
+      for (const seat of seatsByTrip[trip.tripId]) {
+        await prisma.seat.create({
+          data: {
+            ..._.pick(seat, ["riderName", "row", "seat"]),
+            riderId: ridersByName[seat.riderName].id,
+            tripId: savedTrip.id,
+          },
+        });
+      }
+    }
+  };
 
-  const tripTwoCreates = seats[1].map((seat) => {
-    return prisma.seat.create({
-      data: {
-        ...seat,
-        riderId: ridersByName[seat.riderName].id,
-        tripId: tripTwo.id,
-      },
-    });
-  });
-
-  const seatsSaved = await Promise.all(tripOneCreates);
-  const seatsSavedTwo = await Promise.all(tripTwoCreates);
+  createTripsAndSeats();
 
   console.log(`Database has been seeded. 🌱`);
 }
