@@ -14,24 +14,34 @@ type Props = {
 const Seat = ({ id, x, y, width = seatWidth, image }: Props) => {
   return (
     <g>
-      <rect
-        id={id}
-        className="fill-white stroke-rose-700 stroke-1"
-        x={x}
-        y={y}
-        width={width}
-        height={seatHeight}
-      ></rect>
+      <circle
+        className="fill-white stroke-rose-700 stroke-2"
+        cx={x + seatWidth / 2}
+        cy={y + seatHeight / 2}
+        r={seatWidth / 2}
+      />
       {image && (
-        <image
-          className="rounded-full"
-          x={x}
-          y={y}
-          href={image}
-          width={width}
-          height={seatHeight}
-          preserveAspectRatio="none"
-        />
+        <g>
+          <clipPath id={`circleView-${id}`}>
+            <circle
+              cx={x + seatWidth / 2}
+              cy={y + seatHeight / 2}
+              r={seatWidth / 2}
+            />
+          </clipPath>
+
+          <image
+            id={`profileImage-${image}`}
+            x={x}
+            y={y}
+            href={image}
+            width={width}
+            height={seatHeight}
+            preserveAspectRatio="none"
+            clipPath={`url(#circleView-${id})`}
+            // "url(#circleView)"
+          />
+        </g>
       )}
     </g>
   );
