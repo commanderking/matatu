@@ -55,14 +55,11 @@ async function seed() {
 
   const createTripsAndSeats = async () => {
     for (const trip of trips) {
-      console.log({ trips });
-      console.log({ trip });
       const savedTrip = await prisma.trip.create({
         data: _.pick(trip, ["dateTime"]),
       });
 
       for (const seat of seatsByTrip[trip.tripId]) {
-        console.log({ seat });
         await prisma.seat.create({
           data: {
             ..._.pick(seat, ["riderName", "row", "seat"]),
@@ -75,33 +72,6 @@ async function seed() {
   };
 
   createTripsAndSeats();
-
-  // const trip = await prisma.trip.create({ data: trips[0] });
-
-  // const tripOneCreates = seats[0].map((seat) => {
-  //   return prisma.seat.create({
-  //     data: {
-  //       ...seat,
-  //       riderId: ridersByName[seat.riderName].id,
-  //       tripId: trip.id,
-  //     },
-  //   });
-  // });
-
-  // const tripTwo = await prisma.trip.create({ data: trips[1] });
-
-  // const tripTwoCreates = seats[1].map((seat) => {
-  //   return prisma.seat.create({
-  //     data: {
-  //       ...seat,
-  //       riderId: ridersByName[seat.riderName].id,
-  //       tripId: tripTwo.id,
-  //     },
-  //   });
-  // });
-
-  // const seatsSaved = await Promise.all(tripOneCreates);
-  // const seatsSavedTwo = await Promise.all(tripTwoCreates);
 
   console.log(`Database has been seeded. 🌱`);
 }
