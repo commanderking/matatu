@@ -1,0 +1,19 @@
+-- CreateTable
+CREATE TABLE "Trip" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "dateTime" DATETIME NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Seat" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "tripId" TEXT NOT NULL,
+    "riderName" TEXT NOT NULL,
+    "row" INTEGER NOT NULL,
+    "seat" INTEGER NOT NULL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "Seat_tripId_fkey" FOREIGN KEY ("tripId") REFERENCES "Trip" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
