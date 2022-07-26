@@ -1,6 +1,6 @@
 import React from "react";
 import Chair from "app/components/Chair";
-import Seat from "~/components/Rider";
+import Rider from "~/components/Rider";
 
 type Props = {
   id: string;
@@ -14,7 +14,7 @@ const SoloChair = ({ id, x, y, image }: Props) => {
     <React.Fragment>
       <Chair x={x} y={y} />
 
-      {image && <Seat id={id} x={x} y={y} image={image} />}
+      {image && <Rider id={id} x={x} y={y} image={image} />}
     </React.Fragment>
   );
 };

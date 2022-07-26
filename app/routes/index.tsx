@@ -1,5 +1,5 @@
 import VehicleWheel from "~/components/VehicleWheel";
-import Seat from "~/components/Rider";
+import Rider from "~/components/Rider";
 import RowOfSeats from "~/components/RowOfSeats";
 import SoloSeat from "app/components/SoloSeat";
 import { getTrips } from "~/models/trip.server";
@@ -37,7 +37,7 @@ export default function Index() {
   const vehicleBaseYOffset = vehicleFrontHeight - 10;
   const vehicleXStartPos = (svgWidth - vehicleWidth) / 2;
 
-  const seatRowSpacing = 10;
+  const seatXShift = 10;
 
   // @ts-ignore - need to figure out why datetime converts from Date to string in useLoaderData
   const formattedData = processTripsForVehicleVisualization(trips);
@@ -87,7 +87,7 @@ export default function Index() {
               <SoloSeat
                 id={`${trip.dateTime}-1-2`}
                 image={trip.seatMap["1-2"].rider.profileSrc}
-                x={vehicleXStartPos + 10}
+                x={vehicleXStartPos + seatXShift}
                 y={vehicleBaseYOffset + 20}
               />
 
@@ -98,7 +98,7 @@ export default function Index() {
                 image={trip.seatMap["1-1"].rider.profileSrc}
               />
               {trip.seatMap["1-3"]?.rider?.profileSrc && (
-                <Seat
+                <Rider
                   id={`${trip.dateTime}-1-3`}
                   x={vehicleXStartPos + vehicleWidth / 2 - seatWidth / 2}
                   y={vehicleBaseYOffset + 35}
@@ -108,14 +108,14 @@ export default function Index() {
               <RowOfSeats
                 // @ts-ignore - dateTime comes through as Date rather than string here
                 id={trip.dateTime}
-                x={vehicleXStartPos + seatRowSpacing}
+                x={vehicleXStartPos + seatXShift}
                 y={vehicleBaseYOffset + 2 * seatHeight}
                 seats={trip.seatsByRow.rowTwo}
               />
               <RowOfSeats
                 // @ts-ignore - dateTime comes through as Date rather than string here
                 id={trip.dateTime}
-                x={vehicleXStartPos + 10}
+                x={vehicleXStartPos + seatXShift}
                 y={vehicleBaseYOffset + seatHeight * 3 + 20}
                 seats={trip.seatsByRow.rowThree}
               />

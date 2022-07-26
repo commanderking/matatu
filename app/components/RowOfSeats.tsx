@@ -1,4 +1,4 @@
-import Seat from "~/components/Rider";
+import Rider from "~/components/Rider";
 import { seatRowWidth, seatWidth } from "app/constants/vehicle";
 import type { Seat as SeatType } from "app/models/trip.server";
 import ChairRow from "app/components/ChairRow";
@@ -24,7 +24,7 @@ const RowOfSeats = ({ id, seats, x, y }: Props) => {
         const xPosition =
           x + index * (adjustedSeatWidth - (seatWidth - adjustedSeatWidth) / 3);
         return (
-          <Seat
+          <Rider
             id={seatId}
             key={`seat-${index}`}
             x={xPosition}
