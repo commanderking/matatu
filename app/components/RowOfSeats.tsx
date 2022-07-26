@@ -1,6 +1,7 @@
 import Seat from "~/components/Seat";
 import { seatRowWidth, seatWidth } from "app/constants/vehicle";
 import type { Seat as SeatType } from "app/models/trip.server";
+import ChairRow from "app/components/ChairRow";
 
 type Props = {
   id: string;
@@ -16,6 +17,7 @@ const RowOfSeats = ({ id, seats, x, y }: Props) => {
 
   return (
     <g x={x} y={y}>
+      <ChairRow x={x} y={y} />
       {seats.map((seat, index) => {
         const seatId = `${id}-${seat?.row}-${seat?.seat}`;
 

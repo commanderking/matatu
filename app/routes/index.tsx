@@ -1,6 +1,8 @@
 import VehicleWheel from "~/components/VehicleWheel";
 import Seat from "~/components/Seat";
 import RowOfSeats from "~/components/RowOfSeats";
+import Chair from "app/components/Chair";
+import SoloSeat from "app/components/SoloSeat";
 import { getTrips } from "~/models/trip.server";
 import { json } from "@remix-run/node";
 import type { LoaderArgs } from "@remix-run/node";
@@ -12,9 +14,7 @@ import {
   wheelWidth,
   seatWidth,
   seatHeight,
-  firstRowMiddleSeatX,
 } from "app/constants/vehicle";
-
 import { processTripsForVehicleVisualization } from "app/utils/trip";
 
 export async function loader({ request, params }: LoaderArgs) {
@@ -84,13 +84,15 @@ export default function Index() {
                 height={vehicleBaseHeight}
                 className="fill-white stroke-black stroke-2"
               />
-              <Seat
+
+              <SoloSeat
                 id={`${trip.dateTime}-1-2`}
+                image={trip.seatMap["1-2"].rider.profileSrc}
                 x={vehicleXStartPos + 10}
                 y={vehicleBaseYOffset + 20}
-                image={trip.seatMap["1-2"].rider.profileSrc}
               />
-              <Seat
+
+              <SoloSeat
                 id={`${trip.dateTime}-1-1`}
                 x={vehicleXStartPos + vehicleWidth - seatWidth - 10}
                 y={vehicleBaseYOffset + 20}
@@ -115,7 +117,7 @@ export default function Index() {
                 // @ts-ignore - dateTime comes through as Date rather than string here
                 id={trip.dateTime}
                 x={vehicleXStartPos + 10}
-                y={vehicleBaseYOffset + seatHeight * 3 + 10}
+                y={vehicleBaseYOffset + seatHeight * 3 + 20}
                 seats={trip.seatsByRow.rowThree}
               />
             </svg>
