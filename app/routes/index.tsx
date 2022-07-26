@@ -15,7 +15,6 @@ import {
 } from "app/constants/vehicle";
 
 import { processTripsForVehicleVisualization } from "app/utils/trip";
-import { traceDeprecation } from "process";
 
 export async function loader({ request, params }: LoaderArgs) {
   const trips = await getTrips();
@@ -96,12 +95,14 @@ export default function Index() {
                 y={vehicleBaseYOffset + 20}
                 image={trip.seatMap["1-1"].rider.profileSrc}
               />
-              <Seat
-                id={`${trip.dateTime}-1-3`}
-                x={centerVehicleX + 10 + 5 + seatWidth}
-                y={vehicleBaseYOffset + 35}
-                image={trip.seatMap["1-3"]?.rider?.profileSrc}
-              />
+              {trip.seatMap["1-3"]?.rider?.profileSrc && (
+                <Seat
+                  id={`${trip.dateTime}-1-3`}
+                  x={centerVehicleX + 10 + 5 + seatWidth}
+                  y={vehicleBaseYOffset + 35}
+                  image={trip.seatMap["1-3"].rider.profileSrc}
+                />
+              )}
               <RowOfSeats
                 // @ts-ignore - dateTime comes through as Date rather than string here
                 id={trip.dateTime}

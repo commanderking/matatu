@@ -1,4 +1,4 @@
-import { seatHeight, seatWidth } from "app/constants/vehicle";
+import { seatHeight, seatWidth, strokeSpacing } from "app/constants/vehicle";
 
 type Props = {
   id?: string;
@@ -15,7 +15,7 @@ const Seat = ({ id, x, y, width = seatWidth, image }: Props) => {
   return (
     <g>
       <circle
-        className="fill-white stroke-rose-700 stroke-2"
+        className={`fill-white stroke-rose-700 stroke-${strokeSpacing}`}
         cx={x + seatWidth / 2}
         cy={y + seatHeight / 2}
         r={seatWidth / 2}
