@@ -12,6 +12,7 @@ import {
   wheelWidth,
   seatWidth,
   seatHeight,
+  firstRowMiddleSeatX,
 } from "app/constants/vehicle";
 
 import { processTripsForVehicleVisualization } from "app/utils/trip";
@@ -35,7 +36,7 @@ export default function Index() {
   const vehicleFrontHeight = 100;
   const vehicleBaseHeight = 220;
   const vehicleBaseYOffset = vehicleFrontHeight - 10;
-  const centerVehicleX = (svgWidth - vehicleWidth) / 2;
+  const vehicleXStartPos = (svgWidth - vehicleWidth) / 2;
 
   const seatRowSpacing = 10;
 
@@ -51,22 +52,22 @@ export default function Index() {
           <div key={trip.id}>
             <h3 className="text-2xl">{trip.displayDate}</h3>
             <svg className="m-auto" height={svgHeight} width={svgWidth}>
-              <VehicleWheel x={centerVehicleX - wheelWidth / 2} y={35} />
+              <VehicleWheel x={vehicleXStartPos - wheelWidth / 2} y={35} />
               <VehicleWheel
-                x={centerVehicleX + vehicleWidth - wheelWidth / 2}
+                x={vehicleXStartPos + vehicleWidth - wheelWidth / 2}
                 y={35}
               />
               <VehicleWheel
-                x={centerVehicleX - wheelWidth / 2}
+                x={vehicleXStartPos - wheelWidth / 2}
                 y={vehicleBaseYOffset + vehicleBaseHeight - 80}
               />
               <VehicleWheel
-                x={centerVehicleX + vehicleWidth - wheelWidth / 2}
+                x={vehicleXStartPos + vehicleWidth - wheelWidth / 2}
                 y={vehicleBaseYOffset + vehicleBaseHeight - 80}
               />
               <rect
                 id="vehicle-front"
-                x={centerVehicleX}
+                x={vehicleXStartPos}
                 width={vehicleWidth}
                 y={5}
                 height={vehicleFrontHeight}
@@ -77,7 +78,7 @@ export default function Index() {
 
               <rect
                 id="vehicle-base"
-                x={centerVehicleX}
+                x={vehicleXStartPos}
                 y={vehicleBaseYOffset}
                 width={vehicleWidth}
                 height={vehicleBaseHeight}
@@ -85,20 +86,20 @@ export default function Index() {
               />
               <Seat
                 id={`${trip.dateTime}-1-2`}
-                x={centerVehicleX + 10}
+                x={vehicleXStartPos + 10}
                 y={vehicleBaseYOffset + 20}
                 image={trip.seatMap["1-2"].rider.profileSrc}
               />
               <Seat
                 id={`${trip.dateTime}-1-1`}
-                x={centerVehicleX + vehicleWidth - seatWidth - 10}
+                x={vehicleXStartPos + vehicleWidth - seatWidth - 10}
                 y={vehicleBaseYOffset + 20}
                 image={trip.seatMap["1-1"].rider.profileSrc}
               />
               {trip.seatMap["1-3"]?.rider?.profileSrc && (
                 <Seat
                   id={`${trip.dateTime}-1-3`}
-                  x={centerVehicleX + 10 + 5 + seatWidth}
+                  x={vehicleXStartPos + vehicleWidth / 2 - seatWidth / 2}
                   y={vehicleBaseYOffset + 35}
                   image={trip.seatMap["1-3"].rider.profileSrc}
                 />
@@ -106,14 +107,14 @@ export default function Index() {
               <RowOfSeats
                 // @ts-ignore - dateTime comes through as Date rather than string here
                 id={trip.dateTime}
-                x={centerVehicleX + seatRowSpacing}
+                x={vehicleXStartPos + seatRowSpacing}
                 y={vehicleBaseYOffset + 2 * seatHeight}
                 seats={trip.seatsByRow.rowTwo}
               />
               <RowOfSeats
                 // @ts-ignore - dateTime comes through as Date rather than string here
                 id={trip.dateTime}
-                x={centerVehicleX + 10}
+                x={vehicleXStartPos + 10}
                 y={vehicleBaseYOffset + seatHeight * 3 + 10}
                 seats={trip.seatsByRow.rowThree}
               />
