@@ -1,7 +1,6 @@
 import VehicleWheel from "~/components/VehicleWheel";
-import Seat from "~/components/Seat";
+import Seat from "~/components/Rider";
 import RowOfSeats from "~/components/RowOfSeats";
-import Chair from "app/components/Chair";
 import SoloSeat from "app/components/SoloSeat";
 import { getTrips } from "~/models/trip.server";
 import { json } from "@remix-run/node";

@@ -1,6 +1,6 @@
 import React from "react";
 import Chair from "app/components/Chair";
-import Seat from "app/components/Seat";
+import Seat from "~/components/Rider";
 
 type Props = {
   id: string;

@@ -4,14 +4,13 @@ type Props = {
   id?: string;
   x: number;
   y: number;
-  width?: number;
   image: string;
 };
 
 // Nice seat reference
 // https://stackoverflow.com/questions/8976791/how-to-set-a-stroke-width1-on-only-certain-sides-of-svg-shapes
 
-const Seat = ({ id, x, y, width = seatWidth, image }: Props) => {
+const Rider = ({ id, x, y, image }: Props) => {
   return (
     <g>
       {image && (
@@ -46,4 +45,4 @@ const Seat = ({ id, x, y, width = seatWidth, image }: Props) => {
   );
 };
 
-export default Seat;
+export default Rider;

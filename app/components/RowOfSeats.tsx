@@ -1,4 +1,4 @@
-import Seat from "~/components/Seat";
+import Seat from "~/components/Rider";
 import { seatRowWidth, seatWidth } from "app/constants/vehicle";
 import type { Seat as SeatType } from "app/models/trip.server";
 import ChairRow from "app/components/ChairRow";
