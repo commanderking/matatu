@@ -3,9 +3,11 @@ export const vehicleWidth = 150;
 export const wheelWidth = 10;
 export const wheelHeight = 40;
 
+export const strokeSpacing = 1;
+
 export const seatRowWidth = vehicleWidth - 10 - 10;
-export const seatWidth = 40;
-export const seatHeight = 40;
+export const seatWidth = (seatRowWidth - 3 * strokeSpacing) / 3;
+export const seatHeight = seatWidth;
 
 export const rowOneOffset = 10;
 
