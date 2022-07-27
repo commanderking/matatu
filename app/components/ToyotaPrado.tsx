@@ -8,8 +8,7 @@ import {
   seatWidth,
   seatHeight,
 } from "app/constants/vehicle";
-import type { Trips, Seat } from "app/models/trip.server";
-import { FormattedTrips } from "app/utils/trip";
+import type { FormattedTrips } from "app/utils/trip";
 
 type Props = {
   trip: FormattedTrips[number];

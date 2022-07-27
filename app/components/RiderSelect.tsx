@@ -1,6 +1,5 @@
 import Avatar from "app/components/Avatar";
-import _ from "lodash";
-import { Riders } from "app/models/rider.server";
+import type { Riders } from "app/models/rider.server";
 
 type Props = {
   riders: Riders;

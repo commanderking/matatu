@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import RiderSelect from "app/components/RiderSelect";
 import ToyotaPrado from "app/components/ToyotaPrado";
 import { getTrips } from "~/models/trip.server";
@@ -25,8 +24,6 @@ export async function loader({ request, params }: LoaderArgs) {
 export default function Index() {
   const user = useOptionalUser();
   const { trips, riders } = useLoaderData<typeof loader>();
-
-  console.log(riders);
 
   const [selectedRiderId, setSelectedRiderId] = useState<string | null>(null);
   // @ts-ignore - need to figure out why datetime converts from Date to string in useLoaderData

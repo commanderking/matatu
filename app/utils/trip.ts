@@ -61,7 +61,6 @@ const filterTripsByRider = (
   formattedTrips: ReturnType<typeof processTripsForVehicleVisualization>,
   riderId: string | null
 ) => {
-  console.log({ riderId });
   if (!riderId) {
     return formattedTrips;
   }
@@ -72,11 +71,7 @@ const filterTripsByRider = (
 
 export const formatTrips = (trips: Trips, riderId: string | null) => {
   const processedTrips = processTripsForVehicleVisualization(trips);
-
   const filteredTrips = filterTripsByRider(processedTrips, riderId);
-
-  console.log({ filteredTrips });
-
   return filteredTrips;
 };
 
