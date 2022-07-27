@@ -79,3 +79,5 @@ export const formatTrips = (trips: Trips, riderId: string | null) => {
 
   return filteredTrips;
 };
+
+export type FormattedTrips = ReturnType<typeof formatTrips>;

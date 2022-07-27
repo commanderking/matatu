@@ -13,11 +13,7 @@ const RiderSelect = ({ riders, onClick, selectedRiderId }: Props) => {
   const Avatars = riders.map((rider) => {
     const isHighlighted = rider.id === selectedRiderId;
     return (
-      <button
-        className="p-0.5"
-        key={rider.id}
-        onClick={() => onClick(rider.id)}
-      >
+      <button className="p-1" key={rider.id} onClick={() => onClick(rider.id)}>
         <Avatar src={rider.profileSrc} isHighlighted={isHighlighted} />
       </button>
     );
