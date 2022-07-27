@@ -46,7 +46,7 @@ const getSeatMap = (trip: Trips[number]) => {
   return map;
 };
 
-export const processTripsForVehicleVisualization = (trips: Trips) => {
+const processTripsForVehicleVisualization = (trips: Trips) => {
   return trips.map((trip) => {
     return {
       ...trip,
@@ -55,4 +55,27 @@ export const processTripsForVehicleVisualization = (trips: Trips) => {
       seatsByRow: getSeatsByRow(trip),
     };
   });
+};
+
+const filterTripsByRider = (
+  formattedTrips: ReturnType<typeof processTripsForVehicleVisualization>,
+  riderId: string | null
+) => {
+  console.log({ riderId });
+  if (!riderId) {
+    return formattedTrips;
+  }
+  return formattedTrips.filter((trip) =>
+    trip.seats.find((seat) => seat.riderId === riderId)
+  );
+};
+
+export const formatTrips = (trips: Trips, riderId: string | null) => {
+  const processedTrips = processTripsForVehicleVisualization(trips);
+
+  const filteredTrips = filterTripsByRider(processedTrips, riderId);
+
+  console.log({ filteredTrips });
+
+  return filteredTrips;
 };

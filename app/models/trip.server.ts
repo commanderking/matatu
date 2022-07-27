@@ -11,6 +11,7 @@ export async function getTrips() {
           row: true,
           seat: true,
           rider: true,
+          riderId: true,
         },
       },
     },
