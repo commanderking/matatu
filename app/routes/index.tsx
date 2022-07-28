@@ -8,7 +8,7 @@ import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import { useOptionalUser } from "~/utils";
-import { formatTrips } from "app/utils/trip";
+import { formatTrips, getSeats } from "app/utils/trip";
 
 export async function loader({ request, params }: LoaderArgs) {
   const trips = await getTrips();
@@ -25,12 +25,23 @@ export default function Index() {
   const user = useOptionalUser();
   const { trips, riders } = useLoaderData<typeof loader>();
 
+  console.log({ trips });
+
   const [selectedRiderId, setSelectedRiderId] = useState<string | null>(null);
   // @ts-ignore - need to figure out why datetime converts from Date to string in useLoaderData
   const formattedData = formatTrips(trips, selectedRiderId);
 
+  // @ts-ignore
+  const seats = getSeats(trips, selectedRiderId);
+
+  console.log({ seats });
   console.log({ formattedData });
-  console.log({ selectedRiderId });
+
+  const currentRider = selectedRiderId
+    ? riders.find((rider) => rider.id === selectedRiderId)
+    : null;
+
+  const name = currentRider?.firstName || "All Riders";
 
   return (
     <div className="text-center">
@@ -41,6 +52,8 @@ export default function Index() {
         selectedRiderId={selectedRiderId}
         onClick={(riderId: string) => setSelectedRiderId(riderId)}
       />
+      <p className="text-2xl">{name} Heat Map</p>
+      <ToyotaPrado heatMap={seats} />
       <h3 className="mt-8 mb-8 text-3xl">Trips ({formattedData.length})</h3>
 
       {formattedData.map((trip) => {
