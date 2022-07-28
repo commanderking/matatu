@@ -2,13 +2,12 @@ import Rider from "~/components/Rider";
 import { seatRowWidth, seatWidth } from "app/constants/vehicle";
 import type { Seat as SeatType } from "app/models/trip.server";
 import ChairRow from "app/components/ChairRow";
-import { setRandomFallback } from "bcryptjs";
 
 type Props = {
   id: string;
   x: number;
   y: number;
-  seats?: SeatType[];
+  occupiedSeats?: SeatType[];
   heatMapColors:
     | {
         color: string;
@@ -17,11 +16,10 @@ type Props = {
     | null;
 };
 
-const RowOfSeats = ({ id, seats, x, y, heatMapColors }: Props) => {
+const RowOfSeats = ({ id, occupiedSeats, x, y, heatMapColors }: Props) => {
   const getMaxSeats = () => {
-    if (seats) {
-      // seats may only contain occupied riders - really should be renamed to riders
-      return seats.length === 4 ? 4 : 3;
+    if (occupiedSeats) {
+      return occupiedSeats.length === 4 ? 4 : 3;
     }
 
     if (heatMapColors) {
@@ -52,8 +50,8 @@ const RowOfSeats = ({ id, seats, x, y, heatMapColors }: Props) => {
             />
           );
         })}
-      {seats &&
-        seats.map((seat, index) => {
+      {occupiedSeats &&
+        occupiedSeats.map((seat, index) => {
           const seatId = `${id}-${seat?.row}-${seat?.seat}`;
 
           const xPosition =
