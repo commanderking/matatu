@@ -141,7 +141,7 @@ const ToyotaPrado = ({ trip, heatMap }: Props) => {
         id={trip?.dateTime || "rowThree"}
         x={vehicleXStartPos + seatXShift}
         y={vehicleBaseYOffset + seatHeight * 3 + 20}
-        ocupiedSeats={trip && trip.seatsByRow.rowThree}
+        occupiedSeats={trip && trip.seatsByRow.rowThree}
         heatMapColors={getHeatMapColors(["3-3", "3-2", "3-1"])}
       />
     </svg>

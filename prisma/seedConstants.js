@@ -20,14 +20,6 @@ const riders = [
     profileSrc: "/images/peter.png",
   },
   {
-    firstName: "Ivy",
-    profileSrc: "/images/ivy.png",
-  },
-  {
-    firstName: "Amy",
-    profileSrc: "/images/amy.png",
-  },
-  {
     firstName: "Nina",
     profileSrc: "/images/nina.png",
   },
