@@ -1,5 +1,7 @@
 import _ from "lodash";
 import type { Trips, Seat } from "app/models/trip.server";
+import { scaleQuantile } from "d3-scale";
+import { redColorScale } from "app/constants/vehicle";
 
 const getSeatsByRow = (trip: Trips[number]) => {
   const { seats } = trip;
@@ -76,3 +78,74 @@ export const formatTrips = (trips: Trips, riderId: string | null) => {
 };
 
 export type FormattedTrips = ReturnType<typeof formatTrips>;
+
+const ToyotaPradoCounts = {
+  "1-1": 0,
+  "1-2": 0,
+  "1-3": 0,
+  "2-1": 0,
+  "2-2": 0,
+  "2-3": 0,
+  // "2-4": 0,
+  "3-1": 0,
+  "3-2": 0,
+  "3-3": 0,
+};
+
+const getFrequencyPerSeat = (
+  seats: Seat[],
+  seatMapCount: { [key: string]: number }
+) => {
+  const countsPerSeat = seats.reduce((seatCount, currentSeat) => {
+    const currentSeatId = `${currentSeat.row}-${currentSeat.seat}`;
+    return {
+      ...seatCount,
+      [currentSeatId]: seatCount[currentSeatId] + 1,
+    };
+  }, seatMapCount);
+
+  return countsPerSeat;
+};
+
+const getColorsAndCountsPerSeat = (seatMapCount: { [key: string]: number }) => {
+  const counts = Object.values(seatMapCount);
+
+  const max = _.max(counts);
+
+  const quantile = scaleQuantile<string>()
+    .domain([1, max])
+    .range(redColorScale);
+
+  return _.mapValues(seatMapCount, (count) => {
+    return {
+      count,
+      color: count === 0 ? "white" : quantile(count),
+    };
+  });
+};
+
+export const getSeats = (trips: Trips, riderId?: string) => {
+  const fourSeatTrips = trips.filter((trip) =>
+    trip.seats.find((seat) => seat.seat === 4)
+  );
+
+  const threeSeatTrips = trips.filter(
+    (trip) => !trip.seats.find((seat) => seat.seat === 4)
+  );
+
+  console.log({ threeSeatTrips });
+
+  const seats = threeSeatTrips
+    .map((trip) => trip.seats)
+    .flat()
+    .filter((seat) => {
+      if (!riderId) {
+        return seat;
+      }
+
+      return seat.riderId === riderId;
+    });
+
+  const frequencies = getFrequencyPerSeat(seats, ToyotaPradoCounts);
+  return getColorsAndCountsPerSeat(frequencies);
+};
