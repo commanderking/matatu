@@ -2,6 +2,7 @@ import Rider from "~/components/Rider";
 import { seatRowWidth, seatWidth } from "app/constants/vehicle";
 import type { Seat as SeatType } from "app/models/trip.server";
 import ChairRow from "app/components/ChairRow";
+import React from "react";
 
 type Props = {
   id: string;
@@ -40,14 +41,24 @@ const RowOfSeats = ({ id, occupiedSeats, x, y, heatMapColors }: Props) => {
             index * (adjustedSeatWidth - (seatWidth - adjustedSeatWidth) / 3);
 
           return (
-            <rect
-              key={`${index}`}
-              x={xPosition}
-              y={y}
-              width={seatWidth}
-              height={seatWidth}
-              fill={heatMap.color}
-            />
+            <React.Fragment>
+              <rect
+                key={`${index}`}
+                x={xPosition}
+                y={y}
+                width={seatWidth}
+                height={seatWidth}
+                fill={heatMap.color}
+              />
+              <text
+                x={xPosition + adjustedSeatWidth / 2}
+                y={y + seatWidth / 2}
+                dominant-baseline="middle"
+                text-anchor="middle"
+              >
+                {heatMap.count}
+              </text>
+            </React.Fragment>
           );
         })}
       {occupiedSeats &&
