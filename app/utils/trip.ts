@@ -1,7 +1,18 @@
 import _ from "lodash";
 import type { Trips, Seat } from "app/models/trip.server";
 import { scaleQuantile } from "d3-scale";
-import { redColorScale } from "app/constants/vehicle";
+import { redColorScale, seatRowWidth } from "app/constants/vehicle";
+import {
+  vehicleXStartPos,
+  seatXShift,
+  seatWidth,
+  driverSeat,
+  passengerSeat,
+  secondRow,
+  thirdRow,
+  ToyotaPradoSeatPositions,
+} from "app/constants/vehicle";
+import type { Seating, Rider } from "app/types/vehicle";
 
 const getSeatsByRow = (trip: Trips[number]) => {
   const { seats } = trip;
@@ -79,36 +90,36 @@ export const formatTrips = (trips: Trips, riderId: string | null) => {
 
 export type FormattedTrips = ReturnType<typeof formatTrips>;
 
-const ToyotaPradoCounts = {
-  "1-1": 0,
-  "1-2": 0,
-  "1-3": 0,
-  "2-1": 0,
-  "2-2": 0,
-  "2-3": 0,
-  // "2-4": 0,
-  "3-1": 0,
-  "3-2": 0,
-  "3-3": 0,
-};
+const ToyotaPradoCounts = {};
 
 const getFrequencyPerSeat = (
   seats: Seat[],
-  seatMapCount: { [key: string]: number }
+  seatMapCount: { [key: string]: { id: string; count: number } }
 ) => {
   const countsPerSeat = seats.reduce((seatCount, currentSeat) => {
     const currentSeatId = `${currentSeat.row}-${currentSeat.seat}`;
     return {
       ...seatCount,
-      [currentSeatId]: seatCount[currentSeatId] + 1,
+      [currentSeatId]: {
+        id: currentSeatId,
+        count: seatCount[currentSeatId]?.count
+          ? seatCount[currentSeatId]?.count + 1
+          : 1,
+      },
     };
   }, seatMapCount);
 
   return countsPerSeat;
 };
 
-const getColorsAndCountsPerSeat = (seatMapCount: { [key: string]: number }) => {
-  const counts = Object.values(seatMapCount);
+const getColorsAndCountsPerSeat = (
+  seatMapCount: {
+    [key: string]: { id: string; count: number };
+  },
+  rowTwoMaxSeats: number,
+  rowThreeMaxSeats: number
+) => {
+  const counts = Object.values(seatMapCount).map((map) => map.count);
 
   const max = _.max(counts);
 
@@ -116,15 +127,38 @@ const getColorsAndCountsPerSeat = (seatMapCount: { [key: string]: number }) => {
     .domain([1, max])
     .range(redColorScale);
 
-  return _.mapValues(seatMapCount, (count) => {
+  const positionReference = ToyotaPradoSeatPositions;
+
+  const rowTwoPositions = _.keyBy(generateRowRiders(2, rowTwoMaxSeats), "id");
+  const rowThreePositions = _.keyBy(
+    generateRowRiders(3, rowThreeMaxSeats),
+    "id"
+  );
+
+  const allPositionReferences = {
+    ...positionReference,
+    ...rowTwoPositions,
+    ...rowThreePositions,
+  };
+
+  const mappedColors = _.mapValues(seatMapCount, (seatMap) => {
     return {
-      count,
-      color: count === 0 ? "white" : quantile(count),
+      ...seatMap,
+      color: seatMap.count === 0 ? "white" : quantile(seatMap.count),
+      ...allPositionReferences[seatMap.id],
     };
   });
+
+  console.log({ mappedColors });
+
+  return mappedColors;
 };
 
-export const getSeats = (trips: Trips, riderId?: string) => {
+export const getHeatMap = (
+  trips: Trips,
+  riderId?: string,
+  maxSeatsPerRow: number = 3
+) => {
   const fourSeatTrips = trips.filter((trip) =>
     trip.seats.find((seat) => seat.seat === 4)
   );
@@ -147,5 +181,95 @@ export const getSeats = (trips: Trips, riderId?: string) => {
     });
 
   const frequencies = getFrequencyPerSeat(seats, ToyotaPradoCounts);
-  return getColorsAndCountsPerSeat(frequencies);
+  const heatMapPositions = getColorsAndCountsPerSeat(
+    frequencies,
+    maxSeatsPerRow,
+    maxSeatsPerRow
+  );
+
+  return _.values(heatMapPositions);
 };
+
+export const generateSeats = (): Seating[] => {
+  return [driverSeat, passengerSeat, secondRow, thirdRow];
+};
+
+const generateRowRiders = (rowNumber: number, ridersInRow: number) => {
+  const maxSeats = ridersInRow === 4 ? 4 : 3;
+  const adjustedSeatWidth = seatRowWidth / maxSeats;
+
+  const generateRiderPositions = (rowNumber: number, maxSeats: number) => {
+    const baseX = vehicleXStartPos + seatXShift;
+    const baseY = rowNumber === 2 ? secondRow.y : thirdRow.y;
+    return _.times(maxSeats, (index) => {
+      return {
+        id: `${rowNumber}-${maxSeats - index}`,
+        x:
+          baseX +
+          index * (adjustedSeatWidth - (seatWidth - adjustedSeatWidth) / 3),
+        y: baseY,
+        row: rowNumber,
+        seat: maxSeats - index,
+      };
+    });
+  };
+
+  return generateRiderPositions(rowNumber, maxSeats);
+};
+
+const getRiderData = (seat: Seat) => {
+  return {
+    id: seat.riderId,
+    name: seat.riderName,
+    image: seat.rider.profileSrc,
+  };
+};
+
+export const generateRiders = (trip: Trips[number]): Rider[] => {
+  if (!trip) {
+    return [];
+  }
+  const activeSeatsUsed = _.keyBy(trip.seats, (seat) => {
+    return `${seat.row}-${seat.seat}`;
+  });
+
+  const getRiderInfo = (seatId: string) => {
+    if (!activeSeatsUsed[seatId]) {
+      return null;
+    }
+
+    return {
+      ...ToyotaPradoSeatPositions[seatId],
+      ...getRiderData(activeSeatsUsed[seatId]),
+    };
+  };
+
+  const ridersInRowTwo = trip.seats.filter((seat) => seat.row === 2);
+  const ridersInRowThree = trip.seats.filter((seat) => seat.row === 3);
+
+  const rowTwoRiders = generateRowRiders(2, ridersInRowTwo.length);
+  const rowThreeRiders = generateRowRiders(3, ridersInRowThree.length);
+
+  const allRowRiders = [...rowTwoRiders, ...rowThreeRiders];
+
+  const rowRiders = allRowRiders.map((rowRider) => {
+    const { id } = rowRider;
+
+    if (!activeSeatsUsed[id]) {
+      return null;
+    }
+    return {
+      ...rowRider,
+      ...getRiderData(activeSeatsUsed[id]),
+    };
+  });
+
+  return [
+    getRiderInfo("1-1"),
+    getRiderInfo("1-2"),
+    getRiderInfo("1-3"),
+    ...rowRiders,
+  ].filter(Boolean);
+};
+
+export const createTripSeatingConfig = () => {};

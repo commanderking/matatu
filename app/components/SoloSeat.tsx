@@ -17,7 +17,7 @@ type Props = {
 const SoloChair = ({ id, x, y, image, colorCount }: Props) => {
   return (
     <React.Fragment>
-      <Chair x={x} y={y} />
+      <Chair x={x} y={y} seatWidth={seatWidth} seatHeight={seatWidth} />
       {colorCount && (
         <React.Fragment>
           <rect

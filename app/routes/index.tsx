@@ -8,7 +8,8 @@ import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import { useOptionalUser } from "~/utils";
-import { formatTrips, getSeats } from "app/utils/trip";
+import { formatTrips, getHeatMap } from "app/utils/trip";
+import ToyotaPradoHeatMap from "app/components/ToyotaPradoHeatMap";
 
 export async function loader({ request, params }: LoaderArgs) {
   const trips = await getTrips();
@@ -32,7 +33,7 @@ export default function Index() {
   const formattedData = formatTrips(trips, selectedRiderId);
 
   // @ts-ignore
-  const seats = getSeats(trips, selectedRiderId);
+  const seats = getHeatMap(trips, selectedRiderId);
 
   console.log({ seats });
   console.log({ formattedData });
@@ -53,7 +54,7 @@ export default function Index() {
         onClick={(riderId: string) => setSelectedRiderId(riderId)}
       />
       <p className="text-2xl">{name} Heat Map</p>
-      <ToyotaPrado heatMap={seats} />
+      <ToyotaPradoHeatMap heatMap={seats} />
       <h3 className="mt-8 mb-8 text-3xl">Trips ({formattedData.length})</h3>
 
       {formattedData.map((trip) => {

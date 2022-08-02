@@ -24,6 +24,7 @@ export type Seat = {
   riderName: string;
   row: number;
   seat: number;
+  riderId: string;
   rider: {
     id: string;
     firstName: string;

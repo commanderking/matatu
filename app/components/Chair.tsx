@@ -3,11 +3,13 @@ import { seatWidth } from "app/constants/vehicle";
 type Props = {
   x: number;
   y: number;
+  seatWidth: number;
+  seatHeight: number;
 };
 
-const Chair = ({ x, y }: Props) => {
-  const d = `M${x},${y} L${x},${y + seatWidth} ${x + seatWidth},${
-    y + seatWidth
+const Chair = ({ x, y, seatWidth, seatHeight }: Props) => {
+  const d = `M${x},${y} L${x},${y + seatHeight} ${x + seatWidth},${
+    y + seatHeight
   } ${x + seatWidth},${y}`;
 
   return (
