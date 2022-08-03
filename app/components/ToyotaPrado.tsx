@@ -30,8 +30,9 @@ const ToyotaPrado = ({ trip }: Props) => {
       <ToyotaPradoBase />
 
       {riders.map((rider, index) => {
-        // THIS is confusing rider.id is actually the seatId, not rider's. Clean up
-        return <Rider {...rider} id={getId(rider.id)} />;
+        return (
+          <Rider key={`${rider.id}-${index}`} {...rider} id={getId(rider.id)} />
+        );
       })}
     </svg>
   );

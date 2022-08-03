@@ -52,8 +52,8 @@ const ToyotaPradoBase = () => {
         className="fill-white stroke-black stroke-2"
       />
 
-      {seatingFurniture.map((furniture) => {
-        return <Chair {...furniture} />;
+      {seatingFurniture.map((furniture, index) => {
+        return <Chair key={`chair-${index}`} {...furniture} />;
       })}
     </React.Fragment>
   );

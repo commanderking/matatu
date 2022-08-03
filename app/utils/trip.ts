@@ -10,7 +10,7 @@ import {
   thirdRow,
   ToyotaPradoSeatPositions,
 } from "app/constants/vehicle";
-import type { Seating, Rider, ToyotaPradoSeatIds } from "app/types/vehicle";
+import type { Seating, Rider } from "app/types/vehicle";
 
 // Makes Typescript happy when filtering out null values
 function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {

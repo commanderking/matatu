@@ -14,7 +14,7 @@ const ToyotaPrado = ({ heatMap }: Props) => {
       {heatMap.map((seat) => {
         const { x, y, count, color } = seat;
         return (
-          <React.Fragment>
+          <React.Fragment key={`${seat.x}-${seat.y}`}>
             <rect
               x={x}
               y={y}
@@ -26,8 +26,8 @@ const ToyotaPrado = ({ heatMap }: Props) => {
             <text
               x={x + seatWidth / 2}
               y={y + seatWidth / 2}
-              dominant-baseline="middle"
-              text-anchor="middle"
+              dominantBaseline="middle"
+              textAnchor="middle"
             >
               {count}
             </text>
