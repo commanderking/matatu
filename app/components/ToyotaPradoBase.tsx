@@ -4,20 +4,13 @@ import VehicleWheel from "~/components/VehicleWheel";
 import Chair from "app/components/Chair";
 
 import {
-  svgHeight,
-  svgWidth,
   vehicleXStartPos,
   vehicleBaseHeight,
   vehicleBaseYOffset,
   vehicleFrontHeight,
-  seatXShift,
   vehicleWidth,
   wheelWidth,
-  seatWidth,
-  seatHeight,
 } from "app/constants/vehicle";
-import type { FormattedTrips } from "app/utils/trip";
-import type { ColorCount } from "app/types/vehicle";
 import { generateSeats, generateRiders } from "app/utils/trip";
 
 const ToyotaPradoBase = () => {

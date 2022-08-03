@@ -35,9 +35,6 @@ export default function Index() {
   // @ts-ignore
   const seats = getHeatMap(trips, selectedRiderId);
 
-  console.log({ seats });
-  console.log({ formattedData });
-
   const currentRider = selectedRiderId
     ? riders.find((rider) => rider.id === selectedRiderId)
     : null;

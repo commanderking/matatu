@@ -6,7 +6,7 @@ import { generateRiders } from "app/utils/trip";
 import ToyotaPradoBase from "app/components/ToyotaPradoBase";
 
 type Props = {
-  trip?: FormattedTrips[number];
+  trip: FormattedTrips[number];
 };
 
 const ToyotaPrado = ({ trip }: Props) => {
@@ -14,18 +14,11 @@ const ToyotaPrado = ({ trip }: Props) => {
     if (!trip) {
       return seatNumber;
     }
-
     return `${trip.dateTime}-${seatNumber}`;
   };
 
-  const getImage = (seatNumber: string) => {
-    return trip ? trip.seatMap[seatNumber].rider.profileSrc : null;
-  };
-
   const randomRotation = Math.round((Math.random() * 2 - 1) * 10);
-
   const riders = generateRiders(trip);
-  console.log({ riders });
 
   return (
     <svg

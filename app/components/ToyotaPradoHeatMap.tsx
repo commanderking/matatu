@@ -1,25 +1,9 @@
-import VehicleWheel from "~/components/VehicleWheel";
-import Chair from "app/components/Chair";
-
-import {
-  svgHeight,
-  svgWidth,
-  vehicleXStartPos,
-  vehicleBaseHeight,
-  vehicleBaseYOffset,
-  vehicleFrontHeight,
-  vehicleWidth,
-  wheelWidth,
-  seatWidth,
-} from "app/constants/vehicle";
-import type { FormattedTrips } from "app/utils/trip";
-import type { ColorCount } from "app/types/vehicle";
-import { generateSeats, generateRiders } from "app/utils/trip";
+import { svgHeight, svgWidth, seatWidth } from "app/constants/vehicle";
 import React from "react";
 import ToyotaPradoBase from "app/components/ToyotaPradoBase";
-
+import { SeatingColorCounts } from "app/types/vehicle";
 type Props = {
-  heatMap: ColorCount[];
+  heatMap: SeatingColorCounts[];
 };
 
 const ToyotaPrado = ({ heatMap }: Props) => {
@@ -28,15 +12,15 @@ const ToyotaPrado = ({ heatMap }: Props) => {
       <ToyotaPradoBase />
 
       {heatMap.map((seat) => {
-        const { x, y, count } = seat;
+        const { x, y, count, color } = seat;
         return (
           <React.Fragment>
             <rect
-              x={seat.x}
-              y={seat.y}
+              x={x}
+              y={y}
               width={seatWidth}
               height={seatWidth}
-              fill={seat.color}
+              fill={color}
               stroke="black"
             />
             <text
@@ -45,7 +29,7 @@ const ToyotaPrado = ({ heatMap }: Props) => {
               dominant-baseline="middle"
               text-anchor="middle"
             >
-              {seat.count}
+              {count}
             </text>
           </React.Fragment>
         );

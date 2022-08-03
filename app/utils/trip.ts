@@ -6,57 +6,29 @@ import {
   vehicleXStartPos,
   seatXShift,
   seatWidth,
-  driverSeat,
-  passengerSeat,
   secondRow,
   thirdRow,
   ToyotaPradoSeatPositions,
 } from "app/constants/vehicle";
-import type { Seating, Rider } from "app/types/vehicle";
-
-const getSeatsByRow = (trip: Trips[number]) => {
-  const { seats } = trip;
-  const rowTwo = seats.filter((seat) => seat.row === 2);
-  const rowThree = seats.filter((seat) => seat.row === 3);
-
-  const rowTwoSeatsDisplayed =
-    rowTwo.length === 4 ? ["2-4", "2-3", "2-2", "2-1"] : ["2-3", "2-2", "2-1"];
-  const rowThreeSeatsDisplayed =
-    rowThree.length === 4
-      ? ["3-4", "3-3", "3-2", "3-1"]
-      : ["3-3", "3-2", "3-1"];
-
-  const seatMap = getSeatMap(trip);
-  return {
-    rowTwo: rowTwoSeatsDisplayed.map((seatId) => {
-      return seatMap[seatId] || null;
-    }),
-    rowThree: rowThreeSeatsDisplayed.map((seatId) => {
-      return seatMap[seatId] || null;
-    }),
-  };
-};
+import type { Seating, Rider, ToyotaPradoSeatIds } from "app/types/vehicle";
 
 const getDisplayDate = (trip: Trips[number]) => {
   const date = new Date(trip.dateTime);
 
-  const month = date.toLocaleString("default", { month: "long" });
+  const month = date.toLocaleString("default", {
+    month: "long",
+  });
   const day = date.getDate();
 
-  const hour = date.getHours();
+  const hour = date.toLocaleString("default", {
+    hour: "numeric",
+    timeZone: "Africa/Nairobi",
+    hour12: false,
+  });
+
   const minutes = date.getMinutes();
 
   return `${month}, ${day} - ${hour}:${minutes}`;
-};
-
-const getSeatMap = (trip: Trips[number]) => {
-  const { seats } = trip;
-
-  const map = _.keyBy(seats, (seat: Seat) => {
-    return `${seat.row}-${seat.seat}`;
-  });
-
-  return map;
 };
 
 const processTripsForVehicleVisualization = (trips: Trips) => {
@@ -64,8 +36,6 @@ const processTripsForVehicleVisualization = (trips: Trips) => {
     return {
       ...trip,
       displayDate: getDisplayDate(trip),
-      seatMap: getSeatMap(trip),
-      seatsByRow: getSeatsByRow(trip),
     };
   });
 };
@@ -90,12 +60,9 @@ export const formatTrips = (trips: Trips, riderId: string | null) => {
 
 export type FormattedTrips = ReturnType<typeof formatTrips>;
 
-const ToyotaPradoCounts = {};
+const getFrequencyPerSeat = (seats: Seat[]) => {
+  const seatingCounts: { [key: string]: { id: string; count: number } } = {};
 
-const getFrequencyPerSeat = (
-  seats: Seat[],
-  seatMapCount: { [key: string]: { id: string; count: number } }
-) => {
   const countsPerSeat = seats.reduce((seatCount, currentSeat) => {
     const currentSeatId = `${currentSeat.row}-${currentSeat.seat}`;
     return {
@@ -107,7 +74,7 @@ const getFrequencyPerSeat = (
           : 1,
       },
     };
-  }, seatMapCount);
+  }, seatingCounts);
 
   return countsPerSeat;
 };
@@ -120,7 +87,6 @@ const getColorsAndCountsPerSeat = (
   rowThreeMaxSeats: number
 ) => {
   const counts = Object.values(seatMapCount).map((map) => map.count);
-
   const max = _.max(counts);
 
   const quantile = scaleQuantile<string>()
@@ -149,8 +115,6 @@ const getColorsAndCountsPerSeat = (
     };
   });
 
-  console.log({ mappedColors });
-
   return mappedColors;
 };
 
@@ -173,14 +137,10 @@ export const getHeatMap = (
     .map((trip) => trip.seats)
     .flat()
     .filter((seat) => {
-      if (!riderId) {
-        return seat;
-      }
-
-      return seat.riderId === riderId;
+      return !riderId ? seat : seat.riderId === riderId;
     });
 
-  const frequencies = getFrequencyPerSeat(seats, ToyotaPradoCounts);
+  const frequencies = getFrequencyPerSeat(seats);
   const heatMapPositions = getColorsAndCountsPerSeat(
     frequencies,
     maxSeatsPerRow,
@@ -191,7 +151,12 @@ export const getHeatMap = (
 };
 
 export const generateSeats = (): Seating[] => {
-  return [driverSeat, passengerSeat, secondRow, thirdRow];
+  return [
+    ToyotaPradoSeatPositions["1-1"],
+    ToyotaPradoSeatPositions["1-2"],
+    secondRow,
+    thirdRow,
+  ];
 };
 
 const generateRowRiders = (rowNumber: number, ridersInRow: number) => {
@@ -233,7 +198,7 @@ export const generateRiders = (trip: Trips[number]): Rider[] => {
     return `${seat.row}-${seat.seat}`;
   });
 
-  const getRiderInfo = (seatId: string) => {
+  const getRiderInfo = (seatId: "1-1" | "1-2" | "1-3") => {
     if (!activeSeatsUsed[seatId]) {
       return null;
     }
@@ -264,12 +229,17 @@ export const generateRiders = (trip: Trips[number]): Rider[] => {
     };
   });
 
+  // Makes Typescript happy when filtering out null values
+  function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
+    return value !== null && value !== undefined;
+  }
+
   return [
     getRiderInfo("1-1"),
     getRiderInfo("1-2"),
     getRiderInfo("1-3"),
     ...rowRiders,
-  ].filter(Boolean);
+  ].filter(notEmpty);
 };
 
 export const createTripSeatingConfig = () => {};

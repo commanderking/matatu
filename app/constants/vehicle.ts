@@ -24,24 +24,6 @@ export const rowOneOffset = 10;
 export const rowTwoOffset = 10 + seatHeight;
 export const rowThreeOffset = 20 + seatHeight * 2;
 
-export const driverSeat = {
-  row: 1,
-  seat: 1,
-  x: vehicleXStartPos + vehicleWidth - seatWidth - seatXShift,
-  y: vehicleBaseYOffset + driverFrontSeatYShift,
-  seatWidth,
-  seatHeight,
-};
-
-export const passengerSeat = {
-  row: 1,
-  seat: 2,
-  x: vehicleXStartPos + seatXShift,
-  y: vehicleBaseYOffset + driverFrontSeatYShift,
-  seatWidth,
-  seatHeight,
-};
-
 export const secondRow = {
   x: vehicleXStartPos + seatXShift,
   y: vehicleBaseYOffset + 2 * seatHeight,
@@ -56,20 +38,26 @@ export const thirdRow = {
   seatHeight,
 };
 
-export const ToyotaPradoSeatPositions = {
-  "1-1": {
-    id: "1-1",
-    row: 1,
-    seat: 1,
-    x: driverSeat.x,
-    y: driverSeat.y,
-  },
+const driverSeat = {
+  id: "1-1",
+  row: 1,
+  seat: 1,
+  x: vehicleXStartPos + vehicleWidth - seatWidth - seatXShift,
+  y: vehicleBaseYOffset + driverFrontSeatYShift,
+  seatWidth,
+  seatHeight,
+};
+
+export const ToyotaPradoSeatPositions: { [key: string]: typeof driverSeat } = {
+  "1-1": driverSeat,
   "1-2": {
     id: "1-2",
     row: 1,
     seat: 1,
-    x: passengerSeat.x,
-    y: passengerSeat.y,
+    x: vehicleXStartPos + seatXShift,
+    y: vehicleBaseYOffset + driverFrontSeatYShift,
+    seatWidth,
+    seatHeight,
   },
   "1-3": {
     id: "1-3",
@@ -77,6 +65,8 @@ export const ToyotaPradoSeatPositions = {
     seat: 3,
     x: vehicleXStartPos + vehicleWidth / 2 - seatWidth / 2,
     y: vehicleBaseYOffset + 35,
+    seatWidth: 20,
+    seatHeight: 20,
   },
 };
 
