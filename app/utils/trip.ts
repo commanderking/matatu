@@ -12,6 +12,11 @@ import {
 } from "app/constants/vehicle";
 import type { Seating, Rider, ToyotaPradoSeatIds } from "app/types/vehicle";
 
+// Makes Typescript happy when filtering out null values
+function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined;
+}
+
 const getDisplayDate = (trip: Trips[number]) => {
   const date = new Date(trip.dateTime);
 
@@ -131,8 +136,6 @@ export const getHeatMap = (
     (trip) => !trip.seats.find((seat) => seat.seat === 4)
   );
 
-  console.log({ threeSeatTrips });
-
   const seats = threeSeatTrips
     .map((trip) => trip.seats)
     .flat()
@@ -228,11 +231,6 @@ export const generateRiders = (trip: Trips[number]): Rider[] => {
       ...getRiderData(activeSeatsUsed[id]),
     };
   });
-
-  // Makes Typescript happy when filtering out null values
-  function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
-    return value !== null && value !== undefined;
-  }
 
   return [
     getRiderInfo("1-1"),

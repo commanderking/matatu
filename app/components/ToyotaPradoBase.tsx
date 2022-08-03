@@ -11,7 +11,7 @@ import {
   vehicleWidth,
   wheelWidth,
 } from "app/constants/vehicle";
-import { generateSeats, generateRiders } from "app/utils/trip";
+import { generateSeats } from "app/utils/trip";
 
 const ToyotaPradoBase = () => {
   const seatingFurniture = generateSeats();
