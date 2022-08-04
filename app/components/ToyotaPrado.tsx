@@ -10,17 +10,13 @@ type Props = {
   currentRiderId: string | null;
 };
 
-const ToyotaPrado = ({ trip, currentRiderId }: Props) => {
-  const getId = (seatNumber: string) => {
-    if (!trip) {
-      return seatNumber;
-    }
-    return `${trip.dateTime}-${seatNumber}`;
-  };
+const getId = (trip: FormattedTrips[number], seatNumber: string) => {
+  return `${trip.dateTime}-${seatNumber}`;
+};
 
+const ToyotaPrado = ({ trip, currentRiderId }: Props) => {
   const riders = generateRiders(trip);
 
-  console.log({ riders });
   return (
     <svg className="m-auto" height={svgHeight} width={svgWidth}>
       <ToyotaPradoBase />
@@ -30,7 +26,7 @@ const ToyotaPrado = ({ trip, currentRiderId }: Props) => {
           <Rider
             key={`${rider.id}-${index}`}
             {...rider}
-            uniqueId={getId(rider.id)}
+            uniqueId={getId(trip, rider.id)}
             currentRiderId={currentRiderId}
           />
         );

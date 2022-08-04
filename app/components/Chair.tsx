@@ -1,5 +1,3 @@
-import { seatWidth } from "app/constants/vehicle";
-
 type Props = {
   x: number;
   y: number;
