@@ -7,9 +7,10 @@ import ToyotaPradoBase from "app/components/ToyotaPradoBase";
 
 type Props = {
   trip: FormattedTrips[number];
+  currentRiderId: string | null;
 };
 
-const ToyotaPrado = ({ trip }: Props) => {
+const ToyotaPrado = ({ trip, currentRiderId }: Props) => {
   const getId = (seatNumber: string) => {
     if (!trip) {
       return seatNumber;
@@ -17,21 +18,21 @@ const ToyotaPrado = ({ trip }: Props) => {
     return `${trip.dateTime}-${seatNumber}`;
   };
 
-  const randomRotation = Math.round((Math.random() * 2 - 1) * 10);
   const riders = generateRiders(trip);
 
+  console.log({ riders });
   return (
-    <svg
-      className="m-auto"
-      height={svgHeight}
-      width={svgWidth}
-      transform={`rotate(${randomRotation})`}
-    >
+    <svg className="m-auto" height={svgHeight} width={svgWidth}>
       <ToyotaPradoBase />
 
       {riders.map((rider, index) => {
         return (
-          <Rider key={`${rider.id}-${index}`} {...rider} id={getId(rider.id)} />
+          <Rider
+            key={`${rider.id}-${index}`}
+            {...rider}
+            uniqueId={getId(rider.id)}
+            currentRiderId={currentRiderId}
+          />
         );
       })}
     </svg>
