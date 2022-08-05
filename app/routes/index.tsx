@@ -56,9 +56,9 @@ export default function Index() {
 
       {formattedData.map((trip) => {
         return (
-          <div key={trip.id}>
+          <div key={trip.id} className="inline-block">
             <h3 className="text-2xl">{trip.displayDate}</h3>
-            <ToyotaPrado trip={trip} />
+            <ToyotaPrado trip={trip} currentRiderId={selectedRiderId} />
           </div>
         );
       })}

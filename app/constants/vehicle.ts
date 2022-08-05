@@ -13,7 +13,7 @@ export const vehicleXStartPos = (svgWidth - vehicleWidth) / 2;
 export const wheelWidth = 10;
 export const wheelHeight = 40;
 
-export const strokeSpacing = 1;
+export const strokeSpacing = 2;
 
 export const seatRowWidth = vehicleWidth - seatXShift * 2;
 export const seatWidth = (seatRowWidth - 3 * strokeSpacing) / 3;

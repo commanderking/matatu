@@ -1,34 +1,36 @@
 import { seatHeight, seatWidth, strokeSpacing } from "app/constants/vehicle";
 
 type Props = {
-  id?: string;
+  uniqueId: string;
+  id: string;
   x: number;
   y: number;
   image: string;
+  currentRiderId: string | null;
 };
 
 // Nice seat reference
 // https://stackoverflow.com/questions/8976791/how-to-set-a-stroke-width1-on-only-certain-sides-of-svg-shapes
 
-const Rider = ({ id, x, y, image }: Props) => {
+const Rider = ({ uniqueId, id, x, y, image, currentRiderId }: Props) => {
+  const isCurrentRider = currentRiderId === id;
+  const isFaded = currentRiderId !== null && currentRiderId !== id;
+
+  const r = seatWidth / 2;
+
+  const circleClassName = isCurrentRider
+    ? `stroke-rose-700 stroke-${strokeSpacing}`
+    : `stroke-black-700 stroke-${strokeSpacing}`;
+
   return (
     <g>
       {image && (
         <g>
-          <clipPath id={`circleView-${id}`}>
-            <circle
-              cx={x + seatWidth / 2}
-              cy={y + seatHeight / 2}
-              r={seatWidth / 2}
-            />
+          <clipPath id={`circleView-${uniqueId}`}>
+            <circle cx={x + r} cy={y + r} r={r} />
           </clipPath>
 
-          <circle
-            className={`fill-white stroke-rose-700 stroke-${strokeSpacing}`}
-            cx={x + seatWidth / 2}
-            cy={y + seatHeight / 2}
-            r={seatWidth / 2}
-          />
+          <circle className={circleClassName} cx={x + r} cy={y + r} r={r} />
           <image
             id={`profileImage-${image}`}
             x={x}
@@ -37,7 +39,9 @@ const Rider = ({ id, x, y, image }: Props) => {
             width={seatWidth}
             height={seatHeight}
             preserveAspectRatio="none"
-            clipPath={`url(#circleView-${id})`}
+            clipPath={`url(#circleView-${uniqueId})`}
+            opacity={isFaded ? 0.7 : 1}
+            filter={`brightness(${isCurrentRider ? 1.3 : 1})`}
           />
         </g>
       )}
