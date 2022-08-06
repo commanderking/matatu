@@ -13,15 +13,14 @@ import {
 import { generateSeats } from "app/utils/trip";
 
 type Props = {
-  scale?: number;
   hideSeats?: boolean;
 };
 
-const ToyotaPradoBase = ({ scale = 1, hideSeats = false }: Props) => {
+const ToyotaPradoBase = ({ hideSeats = false }: Props) => {
   const seatingFurniture = generateSeats();
 
   return (
-    <g className={`scale-[${scale}]`}>
+    <g>
       <VehicleWheel x={vehicleXStartPos - wheelWidth / 2} y={35} />
       <VehicleWheel
         x={vehicleXStartPos + vehicleWidth - wheelWidth / 2}

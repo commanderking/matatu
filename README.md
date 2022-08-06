@@ -1,3 +1,13 @@
+# SVG Inkscape Notes
+
+Process to drawing path in Inkscape and outputting svg
+
+1. [Outputting Inkscape svg to use pixels for svg](https://graphicdesign.stackexchange.com/questions/84163/svg-and-viewbox-values)
+2. Offset Distance to trace path - [React Motion Example](https://codesandbox.io/s/framer-motion-motion-along-a-path-forked-gb00mx?file=/src/styles.css), [MDN Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path)
+3. [Removing transforms in inkscape](https://stackoverflow.com/questions/13329125/removing-transforms-in-svg-files)
+
+# Build using the Remix Indie Stack
+
 # Remix Indie Stack
 
 ![The Remix Indie Stack](https://repository-images.githubusercontent.com/465928257/a241fa49-bd4d-485a-a2a5-5cb8e4ee0abf)
