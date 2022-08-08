@@ -10,6 +10,7 @@ import { useLoaderData } from "@remix-run/react";
 import { useOptionalUser } from "~/utils";
 import { formatTrips, getHeatMap } from "app/utils/trip";
 import ToyotaPradoHeatMap from "app/components/ToyotaPradoHeatMap";
+import TripMap from "app/components/TripMap";
 
 export async function loader({ request, params }: LoaderArgs) {
   const trips = await getTrips();
@@ -42,7 +43,20 @@ export default function Index() {
   const name = currentRider?.firstName || "All Riders";
 
   return (
-    <div className="text-center">
+    <div className="text-center ">
+      {formattedData.map((trip) => {
+        return (
+          <div key={trip.id} className="inline-block">
+            <h3 className="text-2xl">{trip.displayDate}</h3>
+            <div className="inline-block">
+              <TripMap />
+            </div>
+            <div className="inline-block">
+              <ToyotaPrado trip={trip} currentRiderId={selectedRiderId} />
+            </div>
+          </div>
+        );
+      })}
       <h3 className="mt-8 text-3xl">Riders</h3>
       <p>Filter trips for selected rider</p>
       <RiderSelect
@@ -53,15 +67,6 @@ export default function Index() {
       <p className="text-2xl">{name} Heat Map</p>
       <ToyotaPradoHeatMap heatMap={seats} />
       <h3 className="mt-8 mb-8 text-3xl">Trips ({formattedData.length})</h3>
-
-      {formattedData.map((trip) => {
-        return (
-          <div key={trip.id} className="inline-block">
-            <h3 className="text-2xl">{trip.displayDate}</h3>
-            <ToyotaPrado trip={trip} currentRiderId={selectedRiderId} />
-          </div>
-        );
-      })}
     </div>
   );
 }

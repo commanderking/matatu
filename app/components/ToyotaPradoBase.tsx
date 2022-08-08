@@ -1,4 +1,3 @@
-import React from "react";
 import VehicleWheel from "~/components/VehicleWheel";
 
 import Chair from "app/components/Chair";
@@ -13,11 +12,15 @@ import {
 } from "app/constants/vehicle";
 import { generateSeats } from "app/utils/trip";
 
-const ToyotaPradoBase = () => {
+type Props = {
+  hideSeats?: boolean;
+};
+
+const ToyotaPradoBase = ({ hideSeats = false }: Props) => {
   const seatingFurniture = generateSeats();
 
   return (
-    <React.Fragment>
+    <g>
       <VehicleWheel x={vehicleXStartPos - wheelWidth / 2} y={35} />
       <VehicleWheel
         x={vehicleXStartPos + vehicleWidth - wheelWidth / 2}
@@ -52,10 +55,11 @@ const ToyotaPradoBase = () => {
         className="fill-white stroke-black stroke-2"
       />
 
-      {seatingFurniture.map((furniture, index) => {
-        return <Chair key={`chair-${index}`} {...furniture} />;
-      })}
-    </React.Fragment>
+      {!hideSeats &&
+        seatingFurniture.map((furniture, index) => {
+          return <Chair key={`chair-${index}`} {...furniture} />;
+        })}
+    </g>
   );
 };
 
