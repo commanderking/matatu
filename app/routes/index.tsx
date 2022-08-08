@@ -44,17 +44,6 @@ export default function Index() {
 
   return (
     <div className="text-center ">
-      <h3 className="mt-8 text-3xl">Riders</h3>
-      <p>Filter trips for selected rider</p>
-      <RiderSelect
-        riders={riders}
-        selectedRiderId={selectedRiderId}
-        onClick={(riderId: string) => setSelectedRiderId(riderId)}
-      />
-      <p className="text-2xl">{name} Heat Map</p>
-      <ToyotaPradoHeatMap heatMap={seats} />
-      <h3 className="mt-8 mb-8 text-3xl">Trips ({formattedData.length})</h3>
-
       {formattedData.map((trip) => {
         return (
           <div key={trip.id} className="inline-block">
@@ -68,6 +57,16 @@ export default function Index() {
           </div>
         );
       })}
+      <h3 className="mt-8 text-3xl">Riders</h3>
+      <p>Filter trips for selected rider</p>
+      <RiderSelect
+        riders={riders}
+        selectedRiderId={selectedRiderId}
+        onClick={(riderId: string) => setSelectedRiderId(riderId)}
+      />
+      <p className="text-2xl">{name} Heat Map</p>
+      <ToyotaPradoHeatMap heatMap={seats} />
+      <h3 className="mt-8 mb-8 text-3xl">Trips ({formattedData.length})</h3>
     </div>
   );
 }

@@ -14,10 +14,7 @@ import offsetSylesheetUrl from "app/styles/offsetPath.css";
 import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
-  return [
-    { rel: "stylesheet", href: tailwindStylesheetUrl },
-    { rel: "stylesheet", href: offsetSylesheetUrl },
-  ];
+  return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
 };
 
 export const meta: MetaFunction = () => ({
