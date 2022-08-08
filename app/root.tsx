@@ -10,7 +10,6 @@ import {
 } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-import offsetSylesheetUrl from "app/styles/offsetPath.css";
 import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
