@@ -41,6 +41,8 @@ model Trip {
   id        String @id @default(cuid())
   dateTime  DateTime
   seats     Seat[]
+  route     Route @relation(fields: [routeId], references: [id] )
+  routeId   Int @default(1)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -70,4 +72,11 @@ model Rider {
   profileSrc  String
 
   seats       Seat[]
+}
+
+model Route {
+  id        Int @id @unique
+  start     String
+  end       String
+  trips     Trip[]      
 }

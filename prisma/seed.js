@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
-const { riders, trips, seats } = require("./seedConstants.js");
+const { riders, trips, seats, routes } = require("./seedConstants.js");
 
 const prisma = new PrismaClient();
 
@@ -53,10 +53,24 @@ async function seed() {
   const availableRiders = await Promise.all(riderCreates);
   const ridersByName = _.keyBy(availableRiders, "firstName");
 
+  const createRoutes = async () => {
+    for (const route of routes) {
+      await prisma.route.create({
+        data: {
+          start: route.start,
+          end: route.end,
+          id: route.routeId,
+        },
+      });
+    }
+  };
+
+  createRoutes();
+
   const createTripsAndSeats = async () => {
     for (const trip of trips) {
       const savedTrip = await prisma.trip.create({
-        data: _.pick(trip, ["dateTime"]),
+        data: _.pick(trip, ["dateTime", "routeId"]),
       });
 
       for (const seat of seatsByTrip[trip.tripId]) {
