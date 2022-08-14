@@ -14,6 +14,13 @@ export async function getTrips() {
           riderId: true,
         },
       },
+      route: {
+        select: {
+          id: true,
+          start: true,
+          end: true,
+        },
+      },
     },
   });
 }

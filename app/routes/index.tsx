@@ -43,13 +43,13 @@ export default function Index() {
   const name = currentRider?.firstName || "All Riders";
 
   return (
-    <div className="text-center ">
+    <div className="text-center">
       {formattedData.map((trip) => {
         return (
-          <div key={trip.id} className="inline-block">
+          <div key={trip.id} className="min-h-screen">
             <h3 className="text-2xl">{trip.displayDate}</h3>
             <div className="inline-block">
-              <TripMap />
+              <TripMap route={trip.route} />
             </div>
             <div className="inline-block">
               <ToyotaPrado trip={trip} currentRiderId={selectedRiderId} />
