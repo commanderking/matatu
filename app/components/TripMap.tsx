@@ -89,7 +89,9 @@ const TripMap = ({ route }: Props) => {
           }}
           transition={vehicleTransition}
         >
-          <g className={`-translate-y-3 rotate-90 scale-[0.15]`}>
+          <g
+            className={`-translate-y-3 translate-x-[25px] rotate-90 scale-[0.15]`}
+          >
             <ToyotaPradoBase hideSeats={true} />
           </g>
         </motion.g>
