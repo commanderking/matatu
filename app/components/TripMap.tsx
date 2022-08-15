@@ -1,11 +1,10 @@
 import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
 import ToyotaPradoBase from "app/components/ToyotaPradoBase";
-import { mpalaToFieldPath } from "app/constants/paths";
 import home from "public/images/home.svg";
 import mapPin from "public/images/map-pin.svg";
 import { svgHeight, svgWidth } from "app/constants/vehicle";
-import { Routes } from "app/models/route.server";
+import type { Routes } from "app/models/route.server";
 import { routesById } from "app/constants/routes";
 type Props = {
   route: Routes[number];

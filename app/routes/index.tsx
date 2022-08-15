@@ -27,8 +27,6 @@ export default function Index() {
   const user = useOptionalUser();
   const { trips, riders } = useLoaderData<typeof loader>();
 
-  console.log({ trips });
-
   const [selectedRiderId, setSelectedRiderId] = useState<string | null>(null);
   // @ts-ignore - need to figure out why datetime converts from Date to string in useLoaderData
   const formattedData = formatTrips(trips, selectedRiderId);
