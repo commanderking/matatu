@@ -33,13 +33,9 @@ const TripMap = ({ route }: Props) => {
   // }, []);
 
   const { id } = route;
-
-  // @ts-ignore - doesn't like key being a number
   if (!routesById[id]) {
     return null;
   }
-
-  console.log(routesById[id]);
 
   const {
     path,
@@ -67,7 +63,7 @@ const TripMap = ({ route }: Props) => {
           initial={{ pathLength: 0 }}
           animate={{ pathLength: 1 }}
           transition={pathTransition}
-          d={mpalaToFieldPath}
+          d={path}
           fill="none"
           stroke="#000"
           stroke-width="1px"
@@ -89,7 +85,7 @@ const TripMap = ({ route }: Props) => {
           style={{
             offsetDistance: "var(--offset)",
             // For some reason - can't pass this with the path string as a constant - mpalaToFieldPath
-            offsetPath: path,
+            offsetPath: `path("${path}")`,
           }}
           transition={vehicleTransition}
         >
