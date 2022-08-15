@@ -55,7 +55,7 @@ async function seed() {
 
   const createRoutes = async () => {
     for (const route of routes) {
-      await prisma.route.create({
+      const savedRoute = await prisma.route.create({
         data: {
           start: route.start,
           end: route.end,
