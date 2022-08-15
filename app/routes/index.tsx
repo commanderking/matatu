@@ -27,8 +27,6 @@ export default function Index() {
   const user = useOptionalUser();
   const { trips, riders } = useLoaderData<typeof loader>();
 
-  console.log({ trips });
-
   const [selectedRiderId, setSelectedRiderId] = useState<string | null>(null);
   // @ts-ignore - need to figure out why datetime converts from Date to string in useLoaderData
   const formattedData = formatTrips(trips, selectedRiderId);
@@ -43,13 +41,16 @@ export default function Index() {
   const name = currentRider?.firstName || "All Riders";
 
   return (
-    <div className="text-center ">
+    <div className="text-center">
+      <TripMap
+        route={{ id: 101, start: "Mpala Research Center", end: "Mt. Kenya" }}
+      />
       {formattedData.map((trip) => {
         return (
-          <div key={trip.id} className="inline-block">
+          <div key={trip.id} className="min-h-screen">
             <h3 className="text-2xl">{trip.displayDate}</h3>
             <div className="inline-block">
-              <TripMap />
+              <TripMap route={trip.route} />
             </div>
             <div className="inline-block">
               <ToyotaPrado trip={trip} currentRiderId={selectedRiderId} />
