@@ -2,6 +2,8 @@ import {
   fieldToMpala,
   mpalaToFieldPath,
   mpalaToMtKenya,
+  mtKenyaToNanyuki,
+  nanyukiToMpala,
 } from "app/constants/paths";
 
 const mpalaToFieldRoute = {
@@ -44,5 +46,29 @@ export const routesById: {
     endY: 400,
     endTextX: 620 - 20,
     endTextY: 400 + 40,
+  },
+  102: {
+    id: 102,
+    path: mtKenyaToNanyuki,
+    startX: 715 - 10,
+    startY: 296.6,
+    startTextX: 715 - 60,
+    startTextY: 296.6 + 40,
+    endX: 88,
+    endY: 230,
+    endTextX: 88 - 20,
+    endTextY: 230 + 40,
+  },
+  103: {
+    id: 103,
+    path: nanyukiToMpala,
+    startX: 538.7,
+    startY: 400.7,
+    startTextX: 538.7 - 60,
+    startTextY: 400.7 + 40,
+    endX: 300,
+    endY: 35,
+    endTextX: 300 - 20,
+    endTextY: 35 + 40,
   },
 };
