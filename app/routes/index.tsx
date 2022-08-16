@@ -43,7 +43,7 @@ export default function Index() {
   return (
     <div className="text-center">
       <TripMap
-        route={{ id: 101, start: "Mpala Research Center", end: "Mt. Kenya" }}
+        route={{ id: 103, start: "Mpala Research Center", end: "Mt. Kenya" }}
       />
       {formattedData.map((trip) => {
         return (
