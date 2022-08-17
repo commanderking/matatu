@@ -14,11 +14,13 @@ type Props = {
 const mapWidth = 800;
 const mapHeight = 450;
 
+const vehicleTransition = { duration: 3, ease: "easeInOut", delay: 1 };
+
 const vehicleVariants = {
   visible: {
     "--offset": "100%",
     opacity: 1,
-    transition: { duration: 5, ease: "easeInOut", delay: 1 },
+    transition: vehicleTransition,
   },
   hidden: { "--offset": "0%", opacity: 1 },
 };
@@ -34,7 +36,7 @@ const pathVariants = {
 const vehicalTrailVariants = {
   visible: {
     pathLength: 1,
-    transition: { duration: 5, ease: "easeInOut", delay: 1 },
+    transition: vehicleTransition,
   },
   hidden: { pathLength: 0 },
 };
