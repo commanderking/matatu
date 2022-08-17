@@ -25,14 +25,6 @@ const vehicleVariants = {
   hidden: { "--offset": "0%", opacity: 1 },
 };
 
-const pathVariants = {
-  visible: {
-    pathLength: 1,
-    transition: { duration: 0.5, ease: "linear", delay: 1 },
-  },
-  hidden: { pathLength: 0 },
-};
-
 const vehicalTrailVariants = {
   visible: {
     pathLength: 1,
@@ -43,18 +35,16 @@ const vehicalTrailVariants = {
 
 const TripMap = ({ route }: Props) => {
   const viewBox = useMotionValue(`0 0 ${mapWidth} ${mapHeight}`);
-  const pathControls = useAnimation();
   const vehicleControls = useAnimation();
   const vehicleTrailControls = useAnimation();
   const [ref, inView] = useInView();
 
   useEffect(() => {
     if (inView) {
-      pathControls.start("visible");
       vehicleControls.start("visible");
       vehicleTrailControls.start("visible");
     }
-  }, [pathControls, inView]);
+  }, [vehicleControls, vehicleTrailControls, inView]);
 
   const { id } = route;
   if (!routesById[id]) {
@@ -83,15 +73,7 @@ const TripMap = ({ route }: Props) => {
         xmlns="http://www.w3.org/2000/svg"
         ref={ref}
       >
-        <motion.path
-          d={path}
-          fill="none"
-          stroke="#000"
-          strokeWidth="2px"
-          initial="hidden"
-          animate={pathControls}
-          variants={pathVariants}
-        />
+        <motion.path d={path} fill="none" stroke="#000" strokeWidth="2px" />
         <image href={home} x={startX} y={startY} width={20} height={20} />
         <text className="text-xs" x={startTextX} y={startTextY}>
           {route.start}
