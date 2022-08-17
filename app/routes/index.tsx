@@ -1,6 +1,5 @@
 import { useState } from "react";
 import RiderSelect from "app/components/RiderSelect";
-import ToyotaPrado from "app/components/ToyotaPrado";
 import { getTrips } from "~/models/trip.server";
 import { getRiders } from "app/models/rider.server";
 import { json } from "@remix-run/node";
@@ -11,6 +10,7 @@ import { useOptionalUser } from "~/utils";
 import { formatTrips, getHeatMap } from "app/utils/trip";
 import ToyotaPradoHeatMap from "app/components/ToyotaPradoHeatMap";
 import TripMap from "app/components/TripMap";
+import Trip from "app/components/Trip";
 
 export async function loader({ request, params }: LoaderArgs) {
   const trips = await getTrips();
@@ -46,17 +46,7 @@ export default function Index() {
         route={{ id: 103, start: "Mpala Research Center", end: "Mt. Kenya" }}
       />
       {formattedData.map((trip) => {
-        return (
-          <div key={trip.id} className="min-h-screen">
-            <h3 className="text-2xl">{trip.displayDate}</h3>
-            <div className="inline-block">
-              <TripMap route={trip.route} />
-            </div>
-            <div className="inline-block">
-              <ToyotaPrado trip={trip} currentRiderId={selectedRiderId} />
-            </div>
-          </div>
-        );
+        return <Trip trip={trip} selectedRiderId={selectedRiderId} />;
       })}
       <h3 className="mt-8 text-3xl">Riders</h3>
       <p>Filter trips for selected rider</p>

@@ -84,6 +84,8 @@ const getFrequencyPerSeat = (seats: Seat[]) => {
   return countsPerSeat;
 };
 
+export type FormattedTrip = ReturnType<typeof formatTrips>[number];
+
 const getColorsAndCountsPerSeat = (
   seatMapCount: {
     [key: string]: { id: string; count: number };
