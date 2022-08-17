@@ -1,5 +1,5 @@
-import { motion, useMotionValue, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 import { FormattedTrip } from "app/utils/trip";
