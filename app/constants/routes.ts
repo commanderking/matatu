@@ -8,6 +8,7 @@ import {
   mtKenyaToNanyuki,
   nanyukiToMpala,
   segeraToMpala,
+  mpalaToTalisman,
 } from "app/constants/paths";
 
 const mpalaToFieldRoute = {
@@ -123,6 +124,18 @@ export const routesById: {
     endTextX: 485 - 20,
     endTextY: 220 + 40,
   },
+  200: {
+    id: 200,
+    path: mpalaToTalisman,
+    startX: 394.6 - 10,
+    startY: 37.04 - 10,
+    startTextX: 394.6 - 60,
+    startTextY: 37.04 - 10,
+    endX: 350 - 10,
+    endY: 400,
+    endTextX: 350 - 20,
+    endTextY: 400 + 40,
+  },
 };
 
-// 286.3 51.09
+// 394.6 37.04

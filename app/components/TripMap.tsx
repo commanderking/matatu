@@ -74,15 +74,7 @@ const TripMap = ({ route }: Props) => {
         ref={ref}
       >
         <motion.path d={path} fill="none" stroke="#000" strokeWidth="2px" />
-        <image href={home} x={startX} y={startY} width={20} height={20} />
-        <text className="text-xs" x={startTextX} y={startTextY}>
-          {route.start}
-        </text>
 
-        <image href={mapPin} x={endX} y={endY} width={20} height={20} />
-        <text className="text-xs" x={endTextX} y={endTextY}>
-          {route.end}
-        </text>
         <motion.path
           d={path}
           fill="none"
@@ -92,6 +84,16 @@ const TripMap = ({ route }: Props) => {
           animate={vehicleTrailControls}
           variants={vehicalTrailVariants}
         />
+        <image href={home} x={startX} y={startY} width={20} height={20} />
+
+        <text className="text-xs" x={startTextX} y={startTextY}>
+          {route.start}
+        </text>
+
+        <image href={mapPin} x={endX} y={endY} width={20} height={20} />
+        <text className="text-xs" x={endTextX} y={endTextY}>
+          {route.end}
+        </text>
         <motion.g
           style={{
             offsetDistance: "var(--offset)",
