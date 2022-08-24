@@ -39,7 +39,7 @@ const Trip = ({ trip, selectedRiderId }: Props) => {
       initial="hidden"
       variants={tripVariants}
     >
-      <h3 className="text-2xl">{trip.displayDate}</h3>
+      <h3 className="text-2xl">{trip.time}</h3>
       <div className="inline-block">
         <TripMap route={trip.route} />
       </div>

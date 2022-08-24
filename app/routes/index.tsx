@@ -9,7 +9,6 @@ import { useLoaderData } from "@remix-run/react";
 import { useOptionalUser } from "~/utils";
 import { formatTrips, getHeatMap } from "app/utils/trip";
 import ToyotaPradoHeatMap from "app/components/ToyotaPradoHeatMap";
-import TripMap from "app/components/TripMap";
 import Trip from "app/components/Trip";
 
 export async function loader({ request, params }: LoaderArgs) {
@@ -42,11 +41,19 @@ export default function Index() {
 
   return (
     <div className="text-center">
-      <TripMap
-        route={{ id: 200, start: "Mpala Research Center", end: "Talisman" }}
-      />
-      {formattedData.map((trip) => {
-        return <Trip trip={trip} selectedRiderId={selectedRiderId} />;
+      {formattedData.map((tripsInDay) => {
+        return (
+          <div key={tripsInDay.date} className="p-4 odd:bg-slate-100">
+            <h2 className="text-4xl">{tripsInDay.date}</h2>
+            {tripsInDay.trips.map((trip) => {
+              return (
+                <div key={trip.id} className="pt-8">
+                  <Trip trip={trip} selectedRiderId={selectedRiderId} />
+                </div>
+              );
+            })}
+          </div>
+        );
       })}
       <h3 className="mt-8 text-3xl">Riders</h3>
       <p>Filter trips for selected rider</p>

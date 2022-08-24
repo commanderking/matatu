@@ -33,14 +33,19 @@ const getDisplayDate = (trip: Trips[number]) => {
 
   const minutes = date.getMinutes();
 
-  return `${month}, ${day} - ${hour}:${minutes}`;
+  return {
+    displayDate: `${month} ${day} - ${hour}:${minutes}`,
+    time: `${hour}:${minutes}`,
+    month: date.getMonth() + 1,
+    day,
+  };
 };
 
 const processTripsForVehicleVisualization = (trips: Trips) => {
   return trips.map((trip) => {
     return {
       ...trip,
-      displayDate: getDisplayDate(trip),
+      ...getDisplayDate(trip),
     };
   });
 };
@@ -59,11 +64,27 @@ const filterTripsByRider = (
 
 export const formatTrips = (trips: Trips, riderId: string | null) => {
   const processedTrips = processTripsForVehicleVisualization(trips);
+
   const filteredTrips = filterTripsByRider(processedTrips, riderId);
-  return filteredTrips;
+
+  const tripsByDate = _.groupBy(filteredTrips, (trip) => {
+    return `${trip.month}/${trip.day}`;
+  });
+
+  const uniqueDates = _.uniq(Object.keys(tripsByDate));
+  const tripsGroupedWithDate = uniqueDates.map((date) => {
+    return {
+      date,
+      trips: tripsByDate[date],
+    };
+  });
+
+  return tripsGroupedWithDate;
 };
 
-export type FormattedTrips = ReturnType<typeof formatTrips>;
+export type TripsInDate = ReturnType<typeof formatTrips>[number];
+
+export type FormattedTrip = TripsInDate["trips"][number];
 
 const getFrequencyPerSeat = (seats: Seat[]) => {
   const seatingCounts: { [key: string]: { id: string; count: number } } = {};
@@ -83,8 +104,6 @@ const getFrequencyPerSeat = (seats: Seat[]) => {
 
   return countsPerSeat;
 };
-
-export type FormattedTrip = ReturnType<typeof formatTrips>[number];
 
 const getColorsAndCountsPerSeat = (
   seatMapCount: {
