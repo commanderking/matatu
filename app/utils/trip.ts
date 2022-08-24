@@ -79,6 +79,7 @@ export const formatTrips = (trips: Trips, riderId: string | null) => {
     return `${trip.dayOfWeek}, ${trip.month}/${trip.day}`;
   });
 
+  // Should add more code to guarantee ordering, but for dates given, this should work
   const uniqueDates = _.uniq(Object.keys(tripsByDate));
   const tripsGroupedWithDate = uniqueDates.map((date) => {
     return {
