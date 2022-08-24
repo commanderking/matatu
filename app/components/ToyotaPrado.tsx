@@ -1,16 +1,16 @@
 import Rider from "~/components/Rider";
 
 import { svgHeight, svgWidth } from "app/constants/vehicle";
-import type { FormattedTrips } from "app/utils/trip";
+import type { FormattedTrip } from "app/utils/trip";
 import { generateRiders } from "app/utils/trip";
 import ToyotaPradoBase from "app/components/ToyotaPradoBase";
 
 type Props = {
-  trip: FormattedTrips[number];
+  trip: FormattedTrip;
   currentRiderId: string | null;
 };
 
-const getId = (trip: FormattedTrips[number], seatNumber: string) => {
+const getId = (trip: FormattedTrip, seatNumber: string) => {
   return `${trip.dateTime}-${seatNumber}`;
 };
 

@@ -17,12 +17,19 @@ function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
   return value !== null && value !== undefined;
 }
 
+const weekday = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 const getDisplayDate = (trip: Trips[number]) => {
   const date = new Date(trip.dateTime);
 
-  const month = date.toLocaleString("default", {
-    month: "long",
-  });
   const day = date.getDate();
 
   const hour = date.toLocaleString("default", {
@@ -33,14 +40,20 @@ const getDisplayDate = (trip: Trips[number]) => {
 
   const minutes = date.getMinutes();
 
-  return `${month}, ${day} - ${hour}:${minutes}`;
+  const dayOfWeek = weekday[date.getDay()];
+  return {
+    time: `${hour}:${minutes}`,
+    month: date.getMonth() + 1,
+    day,
+    dayOfWeek,
+  };
 };
 
 const processTripsForVehicleVisualization = (trips: Trips) => {
   return trips.map((trip) => {
     return {
       ...trip,
-      displayDate: getDisplayDate(trip),
+      ...getDisplayDate(trip),
     };
   });
 };
@@ -59,11 +72,28 @@ const filterTripsByRider = (
 
 export const formatTrips = (trips: Trips, riderId: string | null) => {
   const processedTrips = processTripsForVehicleVisualization(trips);
+
   const filteredTrips = filterTripsByRider(processedTrips, riderId);
-  return filteredTrips;
+
+  const tripsByDate = _.groupBy(filteredTrips, (trip) => {
+    return `${trip.dayOfWeek}, ${trip.month}/${trip.day}`;
+  });
+
+  // Should add more code to guarantee ordering, but for dates given, this should work
+  const uniqueDates = _.uniq(Object.keys(tripsByDate));
+  const tripsGroupedWithDate = uniqueDates.map((date) => {
+    return {
+      date,
+      trips: tripsByDate[date],
+    };
+  });
+
+  return tripsGroupedWithDate;
 };
 
-export type FormattedTrips = ReturnType<typeof formatTrips>;
+export type TripsInDate = ReturnType<typeof formatTrips>[number];
+
+export type FormattedTrip = TripsInDate["trips"][number];
 
 const getFrequencyPerSeat = (seats: Seat[]) => {
   const seatingCounts: { [key: string]: { id: string; count: number } } = {};
@@ -83,8 +113,6 @@ const getFrequencyPerSeat = (seats: Seat[]) => {
 
   return countsPerSeat;
 };
-
-export type FormattedTrip = ReturnType<typeof formatTrips>[number];
 
 const getColorsAndCountsPerSeat = (
   seatMapCount: {
