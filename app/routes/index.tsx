@@ -64,7 +64,6 @@ export default function Index() {
       />
       <p className="text-2xl">{name} Heat Map</p>
       <ToyotaPradoHeatMap heatMap={seats} />
-      <h3 className="mt-8 mb-8 text-3xl">Trips ({formattedData.length})</h3>
     </div>
   );
 }
