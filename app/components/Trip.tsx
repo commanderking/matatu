@@ -40,11 +40,17 @@ const Trip = ({ trip, selectedRiderId }: Props) => {
       variants={tripVariants}
     >
       <h3 className="text-2xl">{trip.time}</h3>
-      <div className="inline-block">
-        <TripMap route={trip.route} />
-      </div>
-      <div className="inline-block">
-        <ToyotaPrado trip={trip} currentRiderId={selectedRiderId} />
+      <div className="m-auto w-[604px]">
+        <div className=" w-min border-2">
+          <TripMap route={trip.route} />
+        </div>
+        <div className="m-auto mt-[-20px] w-min">
+          <ToyotaPrado
+            trip={trip}
+            currentRiderId={selectedRiderId}
+            hoodOpacity={50}
+          />
+        </div>
       </div>
     </motion.div>
   );

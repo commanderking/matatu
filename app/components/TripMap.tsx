@@ -11,8 +11,8 @@ type Props = {
   route: Routes[number];
 };
 
-const mapWidth = 800;
-const mapHeight = 450;
+const mapWidth = 600;
+const mapHeight = 337.5;
 
 const vehicleTransition = { duration: 3, ease: "easeInOut", delay: 1 };
 
@@ -34,7 +34,7 @@ const vehicalTrailVariants = {
 };
 
 const TripMap = ({ route }: Props) => {
-  const viewBox = useMotionValue(`0 0 ${mapWidth} ${mapHeight}`);
+  const viewBox = useMotionValue(`0 0 800 450`);
   const vehicleControls = useAnimation();
   const vehicleTrailControls = useAnimation();
   const [ref, inView] = useInView();
@@ -64,7 +64,7 @@ const TripMap = ({ route }: Props) => {
   } = routesById[route.id];
 
   return (
-    <div className="scale-75" style={{ position: "relative" }}>
+    <div className="scale-100" style={{ position: "relative" }}>
       <motion.svg
         width={mapWidth}
         height={mapHeight}

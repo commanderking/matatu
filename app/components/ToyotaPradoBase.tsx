@@ -14,10 +14,13 @@ import { generateSeats } from "app/utils/trip";
 
 type Props = {
   hideSeats?: boolean;
+  hoodOpacity?: number;
 };
 
-const ToyotaPradoBase = ({ hideSeats = false }: Props) => {
+const ToyotaPradoBase = ({ hideSeats = false, hoodOpacity = 1 }: Props) => {
   const seatingFurniture = generateSeats();
+
+  console.log({ hoodOpacity });
 
   return (
     <g>
@@ -37,13 +40,13 @@ const ToyotaPradoBase = ({ hideSeats = false }: Props) => {
 
       <rect
         id="vehicle-front"
+        className={`fill-white stroke-black stroke-2 opacity-${hoodOpacity}`}
         x={vehicleXStartPos}
         width={vehicleWidth}
         y={5}
         height={vehicleFrontHeight}
         rx={40}
         ry={20}
-        className="fill-white stroke-black stroke-2"
       ></rect>
 
       <rect
