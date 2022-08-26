@@ -1,4 +1,4 @@
-export const svgHeight = 350;
+export const svgHeight = 325;
 export const svgWidth = 200;
 
 export const seatXShift = 10;

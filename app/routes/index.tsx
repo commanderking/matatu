@@ -41,29 +41,49 @@ export default function Index() {
 
   return (
     <div className="text-center">
-      {formattedData.map((tripsInDay) => {
-        return (
-          <div key={tripsInDay.date} className="p-4 odd:bg-slate-100">
-            <h2 className="text-4xl">{tripsInDay.date}</h2>
-            {tripsInDay.trips.map((trip) => {
-              return (
-                <div key={trip.id} className="pt-8">
-                  <Trip trip={trip} selectedRiderId={selectedRiderId} />
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
       <h3 className="mt-8 text-3xl">Riders</h3>
       <p>Filter trips for selected rider</p>
       <RiderSelect
         riders={riders}
         selectedRiderId={selectedRiderId}
-        onClick={(riderId: string) => setSelectedRiderId(riderId)}
+        onClick={(riderId: string) => {
+          if (riderId === selectedRiderId) {
+            setSelectedRiderId(null);
+          } else {
+            setSelectedRiderId(riderId);
+          }
+        }}
       />
-      <p className="text-2xl">{name} Heat Map</p>
-      <ToyotaPradoHeatMap heatMap={seats} />
+      <button
+        disabled={selectedRiderId ? false : true}
+        className="rounded-full bg-blue-500 py-1 px-4 font-bold text-white hover:bg-blue-700 disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-500 disabled:shadow-none"
+        onClick={() => setSelectedRiderId(null)}
+      >
+        Reset Selection
+      </button>
+      <div className="mt-8">
+        <p className="text-2xl">{name} Seating Heat Map</p>
+        <ToyotaPradoHeatMap heatMap={seats} />
+      </div>
+      {formattedData.map((tripsInDay) => {
+        return (
+          <div
+            key={tripsInDay.date}
+            className="m-auto max-w-[880px] p-4 even:bg-slate-100"
+          >
+            <h2 className="text-xl">{tripsInDay.date}</h2>
+            <div className="flex flex-wrap p-4">
+              {tripsInDay.trips.map((trip) => {
+                return (
+                  <div key={trip.id} className="sm: w-full md:w-[200px] ">
+                    <Trip trip={trip} selectedRiderId={selectedRiderId} />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -33,19 +33,16 @@ const Trip = ({ trip, selectedRiderId }: Props) => {
   return (
     <motion.div
       key={trip.id}
-      className="min-h-screen"
       ref={ref}
       animate={tripControls}
       initial="hidden"
       variants={tripVariants}
     >
       <h3 className="text-2xl">{trip.time}</h3>
-      <div className="inline-block">
+      {/* <div className="inline-block">
         <TripMap route={trip.route} />
-      </div>
-      <div className="inline-block">
-        <ToyotaPrado trip={trip} currentRiderId={selectedRiderId} />
-      </div>
+      </div> */}
+      <ToyotaPrado trip={trip} currentRiderId={selectedRiderId} />
     </motion.div>
   );
 };
