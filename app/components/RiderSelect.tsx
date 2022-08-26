@@ -18,7 +18,7 @@ const RiderSelect = ({ riders, onClick, selectedRiderId }: Props) => {
     );
   });
 
-  return <div className="m-auto max-w-lg p-8">{Avatars}</div>;
+  return <div className="m-auto max-w-lg p-4">{Avatars}</div>;
 };
 
 export default RiderSelect;
