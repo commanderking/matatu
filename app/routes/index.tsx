@@ -69,10 +69,10 @@ export default function Index() {
         return (
           <div
             key={tripsInDay.date}
-            className="m-auto max-w-[880px] p-4 even:bg-slate-100"
+            className="m-auto max-w-[960px] p-4 even:bg-slate-100"
           >
-            <h2 className="text-xl">{tripsInDay.date}</h2>
-            <div className="flex flex-wrap p-4">
+            <h2 className="text-2xl">{tripsInDay.date}</h2>
+            <div className="flex flex-wrap gap-4 p-4">
               {tripsInDay.trips.map((trip) => {
                 return (
                   <div key={trip.id} className="sm: w-full md:w-[200px] ">
