@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { FormattedTrip } from "app/utils/trip";
 import TripMap from "app/components/TripMap";
 import ToyotaPrado from "app/components/ToyotaPrado";
+import TripDescription from "app/components/TripDescription";
 
 type Props = {
   trip: FormattedTrip;
@@ -38,11 +39,11 @@ const Trip = ({ trip, selectedRiderId }: Props) => {
       initial="hidden"
       variants={tripVariants}
     >
-      <h3 className="text-2xl">{trip.time}</h3>
       {/* <div className="inline-block">
         <TripMap route={trip.route} />
       </div> */}
       <ToyotaPrado trip={trip} currentRiderId={selectedRiderId} />
+      <TripDescription time={trip.time} route={trip.route} />
     </motion.div>
   );
 };

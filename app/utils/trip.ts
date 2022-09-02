@@ -29,9 +29,10 @@ const weekday = [
 
 const getDisplayDate = (trip: Trips[number]) => {
   const date = new Date(trip.dateTime);
-
-  const day = date.getDate();
-
+  const day = date.toLocaleString("default", {
+    day: "numeric",
+    timeZone: "Africa/Nairobi",
+  });
   const hour = date.toLocaleString("default", {
     hour: "numeric",
     timeZone: "Africa/Nairobi",
@@ -39,13 +40,19 @@ const getDisplayDate = (trip: Trips[number]) => {
   });
 
   const minutes = date.getMinutes();
+  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
-  const dayOfWeek = weekday[date.getDay()];
+  const dayOfWeek = date.toLocaleString("default", {
+    weekday: "long",
+    timeZone: "Africa/Nairobi",
+  });
+
   return {
-    time: `${hour}:${minutes}`,
+    time: `${hour}:${formattedMinutes}`,
     month: date.getMonth() + 1,
     day,
     dayOfWeek,
+    rawTime: date.getTime(),
   };
 };
 
@@ -82,12 +89,14 @@ export const formatTrips = (trips: Trips, riderId: string | null) => {
   // Should add more code to guarantee ordering, but for dates given, this should work
   const uniqueDates = _.uniq(Object.keys(tripsByDate));
   const tripsGroupedWithDate = uniqueDates.map((date) => {
+    console.log({ date: tripsByDate[date] });
     return {
       date,
-      trips: tripsByDate[date],
+      trips: _.sortBy(tripsByDate[date], ["rawTime"]),
     };
   });
 
+  console.log({ tripsGroupedWithDate });
   return tripsGroupedWithDate;
 };
 
@@ -269,5 +278,3 @@ export const generateRiders = (trip: Trips[number]): Rider[] => {
     ...rowRiders,
   ].filter(notEmpty);
 };
-
-export const createTripSeatingConfig = () => {};
