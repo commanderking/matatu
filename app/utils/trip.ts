@@ -278,5 +278,3 @@ export const generateRiders = (trip: Trips[number]): Rider[] => {
     ...rowRiders,
   ].filter(notEmpty);
 };
-
-export const createTripSeatingConfig = () => {};
