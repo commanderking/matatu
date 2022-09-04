@@ -10,6 +10,7 @@ import { useOptionalUser } from "~/utils";
 import { formatTrips, getHeatMap } from "app/utils/trip";
 import ToyotaPradoHeatMap from "app/components/ToyotaPradoHeatMap";
 import Trip from "app/components/Trip";
+import Intro from "app/components/Intro";
 
 export async function loader({ request, params }: LoaderArgs) {
   const trips = await getTrips();
@@ -41,7 +42,10 @@ export default function Index() {
 
   return (
     <div className="text-center">
-      <h3 className="mt-8 text-3xl">Riders</h3>
+      <div className="p-8">
+        <Intro />
+      </div>
+      <h3 className="mt-8 text-2xl">Riders</h3>
       <p>Filter trips for selected rider</p>
       <RiderSelect
         riders={riders}
