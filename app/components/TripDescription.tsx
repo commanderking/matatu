@@ -1,6 +1,5 @@
 import { Clock, Circle, MapPin } from "react-feather";
 import { FormattedTrip } from "app/utils/trip";
-import { ModuleGraph } from "vite";
 
 type Props = {
   time: string;
