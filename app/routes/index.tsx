@@ -11,6 +11,7 @@ import { formatTrips, getHeatMap } from "app/utils/trip";
 import ToyotaPradoHeatMap from "app/components/ToyotaPradoHeatMap";
 import Trip from "app/components/Trip";
 import Intro from "app/components/Intro";
+import TripMedia from "app/components/TripMedia";
 
 export async function loader({ request, params }: LoaderArgs) {
   const trips = await getTrips();
@@ -75,7 +76,7 @@ export default function Index() {
             key={tripsInDay.date}
             className="m-auto max-w-[960px] p-4 even:bg-slate-100"
           >
-            <h2 className="text-2xl">{tripsInDay.date}</h2>
+            <h2 className="text-2xl">{tripsInDay.displayDayDate}</h2>
             <div className="flex flex-wrap gap-4 p-4">
               {tripsInDay.trips.map((trip) => {
                 return (
@@ -85,6 +86,9 @@ export default function Index() {
                 );
               })}
             </div>
+            {tripsInDay.media.map((medium) => {
+              return <TripMedia key={medium.src} medium={medium} />;
+            })}
           </div>
         );
       })}
