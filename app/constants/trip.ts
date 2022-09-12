@@ -86,14 +86,4 @@ export const tripMedia: TripMedia[] = [
     src: "images/kenya_daily_photos/2022_07_28_chase_jossy.jpeg",
     mediaType: "IMAGE",
   },
-  {
-    date: "7/29",
-    src: "images/kenya_daily_photos/2022_07_29_talisman_garden.jpeg",
-    mediaType: "IMAGE",
-  },
-  {
-    date: "7/29",
-    src: "images/kenya_daily_photos/2022_07_29_talisman.jpeg",
-    mediaType: "IMAGE",
-  },
 ];

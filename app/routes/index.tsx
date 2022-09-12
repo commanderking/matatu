@@ -86,9 +86,15 @@ export default function Index() {
                 );
               })}
             </div>
-            {tripsInDay.media.map((medium) => {
-              return <TripMedia key={medium.src} medium={medium} />;
-            })}
+            <div className="m-auto max-w-[640px]">
+              {tripsInDay.media.map((medium) => {
+                return (
+                  <div className="mt-4">
+                    <TripMedia key={medium.src} medium={medium} />
+                  </div>
+                );
+              })}
+            </div>
           </div>
         );
       })}
