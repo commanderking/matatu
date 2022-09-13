@@ -1,6 +1,6 @@
-import { TripMedia } from "app/types/vehicle";
+import { TripMedia as TripMediaType } from "app/types/vehicle";
 type Props = {
-  medium: TripMedia;
+  medium: TripMediaType;
 };
 
 const TripMedia = ({ medium }: Props) => {
@@ -9,7 +9,7 @@ const TripMedia = ({ medium }: Props) => {
   }
 
   if (medium.mediaType === "IMAGE") {
-    return <img src={medium.src} />;
+    return <img src={medium.src} alt={`Photo from ${medium.date}`} />;
   }
 
   return null;

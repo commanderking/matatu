@@ -4,10 +4,14 @@ const Intro = () => {
   return (
     <div className="m-auto max-w-[1024px]">
       <h2 className="text-6xl">Hakuna Matatu</h2>
-      <img className="m-auto mt-8 " src={hakunaMatatu} />
+      <img
+        className="m-auto mt-8 "
+        src={hakunaMatatu}
+        alt="Group photo in front of Toyota Prado"
+      />
       <div className="flex flex-wrap ">
         <div className="-mt-16 ml-8 mr-4 bg-white p-2 sm:w-full md:max-w-[45%]">
-          <img src="images/prado_inside.jpg" />
+          <img src="images/prado_inside.jpg" alt="Toyota Prado Inside" />
           <video className="mt-2" autoPlay muted loop>
             <source src="images/prado_buffalo.mov" type="video/mp4" />
           </video>

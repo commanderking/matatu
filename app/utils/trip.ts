@@ -20,16 +20,6 @@ function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
   return value !== null && value !== undefined;
 }
 
-const weekday = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-
 const getDisplayDate = (trip: Trips[number]) => {
   const date = new Date(trip.dateTime);
   const day = date.toLocaleString("default", {
