@@ -27,3 +27,9 @@ export type SeatingColorCounts = {
   x: number;
   y: number;
 } & ColorCount;
+
+export type TripMedia = {
+  date: string;
+  src: string;
+  mediaType: "IMAGE" | "VIDEO";
+};

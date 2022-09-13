@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 import { FormattedTrip } from "app/utils/trip";
-import TripMap from "app/components/TripMap";
 import ToyotaPrado from "app/components/ToyotaPrado";
 import TripDescription from "app/components/TripDescription";
 

@@ -11,21 +11,14 @@ import {
   ToyotaPradoSeatPositions,
 } from "app/constants/vehicle";
 import type { Seating, Rider } from "app/types/vehicle";
+import { tripMedia } from "~/constants/trip";
+
+const mediaByDate = _.groupBy(tripMedia, "date");
 
 // Makes Typescript happy when filtering out null values
 function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
   return value !== null && value !== undefined;
 }
-
-const weekday = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
 
 const getDisplayDate = (trip: Trips[number]) => {
   const date = new Date(trip.dateTime);
@@ -89,14 +82,15 @@ export const formatTrips = (trips: Trips, riderId: string | null) => {
   // Should add more code to guarantee ordering, but for dates given, this should work
   const uniqueDates = _.uniq(Object.keys(tripsByDate));
   const tripsGroupedWithDate = uniqueDates.map((date) => {
-    console.log({ date: tripsByDate[date] });
+    const dateOnly = date.split(",")[1].trim();
     return {
-      date,
+      displayDayDate: date,
       trips: _.sortBy(tripsByDate[date], ["rawTime"]),
+      date: dateOnly,
+      media: mediaByDate[dateOnly] || [],
     };
   });
 
-  console.log({ tripsGroupedWithDate });
   return tripsGroupedWithDate;
 };
 
