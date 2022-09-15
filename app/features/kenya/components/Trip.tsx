@@ -2,9 +2,9 @@ import { motion, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-import { FormattedTrip } from "app/utils/trip";
-import ToyotaPrado from "app/components/ToyotaPrado";
-import TripDescription from "app/components/TripDescription";
+import { FormattedTrip } from "~/features/kenya/utils/trip";
+import ToyotaPrado from "~/features/kenya/components/ToyotaPrado";
+import TripDescription from "~/features/kenya/components/TripDescription";
 
 type Props = {
   trip: FormattedTrip;

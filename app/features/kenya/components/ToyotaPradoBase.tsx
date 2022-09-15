@@ -1,6 +1,6 @@
-import VehicleWheel from "~/components/VehicleWheel";
+import VehicleWheel from "~/features/kenya/components/VehicleWheel";
 
-import Chair from "app/components/Chair";
+import Chair from "~/features/kenya/components/Chair";
 
 import {
   vehicleXStartPos,
@@ -9,8 +9,8 @@ import {
   vehicleFrontHeight,
   vehicleWidth,
   wheelWidth,
-} from "app/constants/vehicle";
-import { generateSeats } from "app/utils/trip";
+} from "~/features/kenya/constants/vehicle";
+import { generateSeats } from "~/features/kenya/utils/trip";
 
 type Props = {
   hideSeats?: boolean;

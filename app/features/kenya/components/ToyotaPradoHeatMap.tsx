@@ -1,7 +1,11 @@
-import { svgHeight, svgWidth, seatWidth } from "app/constants/vehicle";
+import {
+  svgHeight,
+  svgWidth,
+  seatWidth,
+} from "~/features/kenya/constants/vehicle";
 import React from "react";
-import ToyotaPradoBase from "app/components/ToyotaPradoBase";
-import { SeatingColorCounts } from "app/types/vehicle";
+import ToyotaPradoBase from "~/features/kenya/components/ToyotaPradoBase";
+import { SeatingColorCounts } from "~/features/kenya/types/vehicle";
 type Props = {
   heatMap: SeatingColorCounts[];
 };

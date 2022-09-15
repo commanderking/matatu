@@ -9,7 +9,7 @@ import {
   nanyukiToMpala,
   segeraToMpala,
   mpalaToTalisman,
-} from "app/constants/paths";
+} from "~/features/kenya/constants/paths";
 
 const mpalaToFieldRoute = {
   id: 1,

@@ -1,5 +1,5 @@
 import { Clock, Circle, MapPin } from "react-feather";
-import { FormattedTrip } from "app/utils/trip";
+import { FormattedTrip } from "~/features/kenya/utils/trip";
 
 type Props = {
   time: string;

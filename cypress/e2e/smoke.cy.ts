@@ -6,7 +6,7 @@ describe("smoke tests", () => {
   // });
 
   it("should render Matatu visualiation", () => {
-    cy.visit("/");
+    cy.visit("/kenya");
     cy.findByText("Riders");
   });
 
