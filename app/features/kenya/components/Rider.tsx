@@ -1,4 +1,8 @@
-import { seatHeight, seatWidth, strokeSpacing } from "app/constants/vehicle";
+import {
+  seatHeight,
+  seatWidth,
+  strokeSpacing,
+} from "~/features/kenya/constants/vehicle";
 
 type Props = {
   uniqueId: string;

@@ -1,4 +1,4 @@
-import { TripMedia as TripMediaType } from "app/types/vehicle";
+import { TripMedia as TripMediaType } from "~/features/kenya/types/vehicle";
 type Props = {
   medium: TripMediaType;
 };

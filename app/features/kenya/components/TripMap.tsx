@@ -2,11 +2,11 @@ import { motion, useMotionValue, useAnimation } from "framer-motion";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-import ToyotaPradoBase from "app/components/ToyotaPradoBase";
+import ToyotaPradoBase from "~/features/kenya/components/ToyotaPradoBase";
 import home from "public/images/home.svg";
 import mapPin from "public/images/map-pin.svg";
 import type { Routes } from "app/models/route.server";
-import { routesById } from "app/constants/routes";
+import { routesById } from "~/features/kenya/constants/routes";
 type Props = {
   route: Routes[number];
 };

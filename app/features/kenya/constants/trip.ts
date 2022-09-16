@@ -1,4 +1,4 @@
-import { TripMedia } from "app/types/vehicle";
+import { TripMedia } from "~/features/kenya/types/vehicle";
 
 export const tripMedia: TripMedia[] = [
   {

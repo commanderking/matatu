@@ -1,7 +1,10 @@
 import _ from "lodash";
 import type { Trips, Seat } from "app/models/trip.server";
 import { scaleQuantile } from "d3-scale";
-import { redColorScale, seatRowWidth } from "app/constants/vehicle";
+import {
+  redColorScale,
+  seatRowWidth,
+} from "~/features/kenya/constants/vehicle";
 import {
   vehicleXStartPos,
   seatXShift,
@@ -9,9 +12,9 @@ import {
   secondRow,
   thirdRow,
   ToyotaPradoSeatPositions,
-} from "app/constants/vehicle";
-import type { Seating, Rider } from "app/types/vehicle";
-import { tripMedia } from "~/constants/trip";
+} from "~/features/kenya/constants/vehicle";
+import type { Seating, Rider } from "~/features/kenya/types/vehicle";
+import { tripMedia } from "~/features/kenya/constants/trip";
 
 const mediaByDate = _.groupBy(tripMedia, "date");
 

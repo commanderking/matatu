@@ -1,4 +1,4 @@
-import Avatar from "app/components/Avatar";
+import Avatar from "~/features/kenya/components/Avatar";
 import type { Riders } from "app/models/rider.server";
 
 type Props = {

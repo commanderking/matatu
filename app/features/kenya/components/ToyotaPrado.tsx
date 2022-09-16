@@ -1,9 +1,9 @@
-import Rider from "~/components/Rider";
+import Rider from "~/features/kenya/components/Rider";
 
-import { svgHeight, svgWidth } from "app/constants/vehicle";
-import type { FormattedTrip } from "app/utils/trip";
-import { generateRiders } from "app/utils/trip";
-import ToyotaPradoBase from "app/components/ToyotaPradoBase";
+import { svgHeight, svgWidth } from "~/features/kenya/constants/vehicle";
+import type { FormattedTrip } from "~/features/kenya/utils/trip";
+import { generateRiders } from "~/features/kenya/utils/trip";
+import ToyotaPradoBase from "~/features/kenya/components/ToyotaPradoBase";
 
 type Props = {
   trip: FormattedTrip;

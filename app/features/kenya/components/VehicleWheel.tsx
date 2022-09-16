@@ -1,4 +1,4 @@
-import { wheelWidth, wheelHeight } from "app/constants/vehicle";
+import { wheelWidth, wheelHeight } from "~/features/kenya/constants/vehicle";
 
 type Props = {
   x: number;
