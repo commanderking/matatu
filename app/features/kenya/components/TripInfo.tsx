@@ -11,33 +11,9 @@ type Props = {
   selectedRiderId: string | null;
 };
 
-const tripVariants = {
-  visible: {
-    opacity: 1,
-    transition: { duration: 2 },
-  },
-  hidden: { opacity: 0 },
-};
-
 const Trip = ({ trip, selectedRiderId }: Props) => {
-  const [ref, inView] = useInView();
-
-  const tripControls = useAnimation();
-
-  useEffect(() => {
-    if (inView) {
-      tripControls.start("visible");
-    }
-  }, [tripControls, inView]);
-
   return (
-    <motion.div
-      key={trip.id}
-      ref={ref}
-      animate={tripControls}
-      initial="hidden"
-      variants={tripVariants}
-    >
+    <motion.div key={trip.id}>
       {/* <div className="inline-block">
         <TripMap route={trip.route} />
       </div> */}
