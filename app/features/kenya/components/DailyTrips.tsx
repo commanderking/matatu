@@ -4,9 +4,9 @@ import { useInView } from "react-intersection-observer";
 
 import TripInfo from "~/features/kenya/components/TripInfo";
 import TripMedia from "~/features/kenya/components/TripMedia";
-
+import { TripsInDate } from "app/features/kenya/utils/trip";
 type Props = {
-  tripsInDay: any;
+  tripsInDay: TripsInDate;
   selectedRiderId: string | null;
 };
 
