@@ -1,7 +1,4 @@
-import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
-
+import { motion } from "framer-motion";
 import { FormattedTrip } from "~/features/kenya/utils/trip";
 import ToyotaPrado from "~/features/kenya/components/ToyotaPrado";
 import TripDescription from "~/features/kenya/components/TripDescription";
