@@ -9,9 +9,10 @@ import { useLoaderData } from "@remix-run/react";
 import { useOptionalUser } from "~/utils";
 import { formatTrips, getHeatMap } from "~/features/kenya/utils/trip";
 import ToyotaPradoHeatMap from "~/features/kenya/components/ToyotaPradoHeatMap";
-import Trip from "~/features/kenya/components/Trip";
+import TripInfo from "~/features/kenya/components/TripInfo";
 import Intro from "~/features/kenya/components/Intro";
 import TripMedia from "~/features/kenya/components/TripMedia";
+import DailyTrips from "app/features/kenya/components/DailyTrips";
 
 export async function loader({ request, params }: LoaderArgs) {
   const trips = await getTrips();
@@ -72,30 +73,11 @@ export default function Kenya() {
       </div>
       {formattedData.map((tripsInDay) => {
         return (
-          <div
+          <DailyTrips
             key={tripsInDay.date}
-            className="m-auto max-w-[960px] p-4 even:bg-slate-100"
-          >
-            <h2 className="text-2xl">{tripsInDay.displayDayDate}</h2>
-            <div className="flex flex-wrap gap-4 p-4">
-              {tripsInDay.trips.map((trip) => {
-                return (
-                  <div key={trip.id} className="sm: w-full md:w-[200px] ">
-                    <Trip trip={trip} selectedRiderId={selectedRiderId} />
-                  </div>
-                );
-              })}
-            </div>
-            <div className="m-auto max-w-[640px]">
-              {tripsInDay.media.map((medium) => {
-                return (
-                  <div className="mt-4" key={medium.src}>
-                    <TripMedia medium={medium} />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+            tripsInDay={tripsInDay}
+            selectedRiderId={selectedRiderId}
+          />
         );
       })}
     </div>
