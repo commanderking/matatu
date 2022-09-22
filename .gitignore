@@ -12,3 +12,5 @@ node_modules
 /app/styles/tailwind.css
 
 .DS_STORE
+
+/preprocessing/bluebikes/data

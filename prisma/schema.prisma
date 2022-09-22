@@ -80,3 +80,19 @@ model Route {
   end       String
   trips     Trip[]      
 }
+
+
+model BikeTrip {
+  id                  String @id @default(cuid())
+  tripDuration        Int 
+  startTime           DateTime
+  stopTime            DateTime
+  startStationId      String
+  startStationName    String
+  endStationId        String
+  endStationName      String
+  bikeId              Int
+  userType            String
+  birthYear           Int?
+  gender              String?
+}
