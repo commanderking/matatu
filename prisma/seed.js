@@ -2,6 +2,8 @@ const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 const { riders, trips, seats, routes } = require("./seedConstants.js");
+const csv = require("csvtojson");
+var path = require("path");
 
 const prisma = new PrismaClient();
 
@@ -86,6 +88,56 @@ async function seed() {
   };
 
   createTripsAndSeats();
+
+  const bikeTrips = await csv({
+    colParser: {
+      starttime: (item) => new Date(item),
+      stoptime: (item) => new Date(item),
+      bikeid: "number",
+      birthyear: "number",
+      tripduration: "number",
+    },
+  }).fromFile(path.join(__dirname, "202203_bluebikes_tripdata.csv"));
+
+  const keyMap = {
+    tripduration: "tripDuration",
+    starttime: "startTime",
+    stoptime: "stopTime",
+    "start station id": "startStationId",
+    "start station name": "startStationName",
+    "end station id": "endStationId",
+    "end station name": "endStationName",
+    bikeid: "bikeId",
+    usertype: "userType",
+    birthyear: "birthYear",
+  };
+
+  const bikeTripsCorrectedKeys = bikeTrips.map((trip) => {
+    return _.mapKeys(trip, (value, key) => {
+      return keyMap[key] || key;
+    });
+  });
+
+  const createBikeTrips = async () => {
+    for (const bikeTrip of bikeTripsCorrectedKeys) {
+      const savedBikeTrips = await prisma.bikeTrip.create({
+        data: _.pick(bikeTrip, [
+          "tripDuration",
+          "startTime",
+          "stopTime",
+          "startStationId",
+          "startStationName",
+          "endStationId",
+          "endStationName",
+          "bikeId",
+          "userType",
+          "birthYear",
+        ]),
+      });
+    }
+  };
+
+  createBikeTrips();
 
   console.log(`Database has been seeded. 🌱`);
 }
