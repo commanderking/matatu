@@ -161,8 +161,6 @@ async function seed() {
     },
   }).fromFile(path.join(__dirname, "current_bluebikes_stations.csv"));
 
-  console.log(bikeStations[0]);
-
   const bikeStationKeyMap = {
     Number: "number",
     Name: "name",
@@ -179,8 +177,6 @@ async function seed() {
       return bikeStationKeyMap[key] || key;
     });
   });
-
-  console.log(stationsCorrectedKeys[0]);
 
   const createBikeStations = async () => {
     for (const bikeStation of stationsCorrectedKeys) {
