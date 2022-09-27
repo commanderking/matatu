@@ -96,3 +96,15 @@ model BikeTrip {
   birthYear           Int?
   gender              String?
 }
+
+model BikeStation {
+  id                  String @id @default(cuid())
+  number              String
+  name                String 
+  latitude            Float
+  longitude           Float
+  district            String
+  public              String
+  totalDocks          Int
+  deploymentYear      Int?
+}

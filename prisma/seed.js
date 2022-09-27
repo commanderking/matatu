@@ -139,6 +139,64 @@ async function seed() {
 
   createBikeTrips();
 
+  // In future, will need to remove first line from current_bluebikes_stations.csv data
+
+  // const fs = require("fs");
+  // const filePath = "./table.csv";
+
+  // let csvContent = fs.readFileSync(filePath).toString().split("\n"); // read file and convert to array by line break
+  // csvContent.shift(); // remove the the first element from array
+  // csvContent = csvContent.join("\n"); // convert array back to string
+
+  // fs.writeFileSync(filePath, csvContent);
+
+  const bikeStations = await csv({
+    colParser: {
+      Latitude: "number",
+      Longitude: "number",
+      "Total docks": "number",
+      "Deployment year": (item) => {
+        return item === "#N/A" ? null : parseInt(item);
+      },
+    },
+  }).fromFile(path.join(__dirname, "current_bluebikes_stations.csv"));
+
+  const bikeStationKeyMap = {
+    Number: "number",
+    Name: "name",
+    Latitude: "latitude",
+    Longitude: "longitude",
+    District: "district",
+    Public: "public",
+    "Total docks": "totalDocks",
+    "Deployment year": "deploymentYear",
+  };
+
+  const stationsCorrectedKeys = bikeStations.map((trip) => {
+    return _.mapKeys(trip, (value, key) => {
+      return bikeStationKeyMap[key] || key;
+    });
+  });
+
+  const createBikeStations = async () => {
+    for (const bikeStation of stationsCorrectedKeys) {
+      const savedBikeStations = await prisma.bikeStation.create({
+        data: _.pick(bikeStation, [
+          "number",
+          "name",
+          "latitude",
+          "longitude",
+          "district",
+          "public",
+          "totalDocks",
+          "deploymentYear",
+        ]),
+      });
+    }
+  };
+
+  createBikeStations();
+
   console.log(`Database has been seeded. 🌱`);
 }
 
