@@ -89,12 +89,8 @@ model BikeTrip {
   stopTime            DateTime
   startStationId      String
   startStationName    String
-  startLatitude       Float
-  startLongitude      Float
   endStationId        String
   endStationName      String
-  endLatitude         Float
-  endLongitude        Float 
   bikeId              Int
   userType            String
   birthYear           Int?

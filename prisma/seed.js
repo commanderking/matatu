@@ -96,10 +96,6 @@ async function seed() {
       bikeid: "number",
       birthyear: "number",
       tripduration: "number",
-      "start station latitude": "number",
-      "start station longitude": "number",
-      "end station latitude": "number",
-      "end station longitude": "number",
     },
   }).fromFile(path.join(__dirname, "202203_bluebikes_tripdata.csv"));
 
@@ -109,13 +105,9 @@ async function seed() {
     stoptime: "stopTime",
     "start station id": "startStationId",
     "start station name": "startStationName",
-    "start station latitude": "startLatitude",
-    "start station longitude": "startLongitude",
     "end station latitude": "endLatitude",
     "end station id": "endStationId",
     "end station name": "endStationName",
-    "end station latitude": "endLatitude",
-    "end station longitude": "endLongitude",
     bikeid: "bikeId",
     usertype: "userType",
     birthyear: "birthYear",
@@ -141,10 +133,6 @@ async function seed() {
           "bikeId",
           "userType",
           "birthYear",
-          "startLatitude",
-          "startLongitude",
-          "endLatitude",
-          "endLongitude",
         ]),
       });
     }
