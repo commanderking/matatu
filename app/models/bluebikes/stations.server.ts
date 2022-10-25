@@ -6,8 +6,7 @@ type GetStationParams = {
   district?: District;
 };
 
-export async function getStations(params: GetStationParams) {
-  const { district } = params;
+export async function getStations(params?: GetStationParams) {
   return prisma.bikeStation.findMany({
     select: {
       id: true,
@@ -18,7 +17,7 @@ export async function getStations(params: GetStationParams) {
       district: true,
     },
     where: {
-      district,
+      district: params?.district,
     },
   });
 }

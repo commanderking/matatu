@@ -105,6 +105,7 @@ async function seed() {
     stoptime: "stopTime",
     "start station id": "startStationId",
     "start station name": "startStationName",
+    "end station latitude": "endLatitude",
     "end station id": "endStationId",
     "end station name": "endStationName",
     bikeid: "bikeId",
