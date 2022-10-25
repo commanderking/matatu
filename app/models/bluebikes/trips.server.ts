@@ -22,19 +22,4 @@ export async function getTrips(params: GetStationParams) {
   });
 }
 
-// model BikeTrip {
-//     id                  String @id @default(cuid())
-//     tripDuration        Int
-//     startTime           DateTime
-//     stopTime            DateTime
-//     startStationId      String
-//     startStationName    String
-//     endStationId        String
-//     endStationName      String
-//     bikeId              Int
-//     userType            String
-//     birthYear           Int?
-//     gender              String?
-//   }
-
 export type Stations = Awaited<Promise<ReturnType<typeof getTrips>>>;
