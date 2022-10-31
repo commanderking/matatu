@@ -10,7 +10,7 @@ export function links() {
 }
 
 export async function loader({ request, params }: LoaderArgs) {
-  const stations = await getStations({ district: "Cambridge" });
+  const stations = await getStations();
   if (!stations) {
     throw new Response("Not Found", { status: 404 });
   }

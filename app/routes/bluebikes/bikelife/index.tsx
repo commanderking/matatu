@@ -6,6 +6,7 @@ import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import StationMap from "app/features/bluebikes/components/StationsMap";
 import styles from "mapbox-gl/dist/mapbox-gl.css";
+import { getStationLocationsForTrips } from "app/features/bluebikes/utils/trips";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -28,10 +29,16 @@ export async function loader({ request, params }: LoaderArgs) {
 const StationsPage = () => {
   const { trips, stations, mapboxToken } = useLoaderData<typeof loader>();
 
+  const stationLocations = getStationLocationsForTrips(trips, stations);
+  console.log({ stationLocations });
   console.log({ trips });
   console.log({ stations });
 
-  return <div></div>;
+  return (
+    <div>
+      <StationMap stations={stationLocations} mapboxToken={mapboxToken} />
+    </div>
+  );
 };
 
 export default StationsPage;

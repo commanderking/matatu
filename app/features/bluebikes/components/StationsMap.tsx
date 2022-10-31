@@ -21,7 +21,7 @@ const StationsMap = ({ mapboxToken, stations }: Props) => {
           zoom: zoom,
         }}
         style={{ width: "100%", height: 600 }}
-        mapStyle="mapbox://styles/mapbox/streets-v11"
+        mapStyle="mapbox://styles/mapbox/light-v10"
         mapboxAccessToken={mapboxToken}
       >
         {stations.map((station) => {

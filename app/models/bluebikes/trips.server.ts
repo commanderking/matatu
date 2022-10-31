@@ -15,6 +15,8 @@ export async function getTrips(params: GetStationParams) {
       endStationName: true,
       birthYear: true,
       gender: true,
+      startTime: true,
+      stopTime: true,
     },
     where: {
       bikeId,
@@ -22,4 +24,5 @@ export async function getTrips(params: GetStationParams) {
   });
 }
 
-export type Stations = Awaited<Promise<ReturnType<typeof getTrips>>>;
+export type Trips = Awaited<Promise<ReturnType<typeof getTrips>>>;
+export type Trip = Trips[0];
