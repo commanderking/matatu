@@ -85,8 +85,8 @@ model Route {
 model BikeTrip {
   id                  String @id @default(cuid())
   tripDuration        Int 
-  startTime           DateTime
-  stopTime            DateTime
+  startTime           String
+  stopTime            String
   startStationId      String
   startStationName    String
   endStationId        String

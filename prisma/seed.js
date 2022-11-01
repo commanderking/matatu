@@ -91,8 +91,6 @@ async function seed() {
 
   const bikeTrips = await csv({
     colParser: {
-      starttime: (item) => new Date(item),
-      stoptime: (item) => new Date(item),
       bikeid: "number",
       birthyear: "number",
       tripduration: "number",
