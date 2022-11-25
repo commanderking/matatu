@@ -6,7 +6,10 @@ import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import StationMap from "app/features/bluebikes/components/StationsMap";
 import styles from "mapbox-gl/dist/mapbox-gl.css";
-import { getStationLocationsForTrips } from "app/features/bluebikes/utils/trips";
+import {
+  getStationLocationsForTrips,
+  getTripsByDate,
+} from "app/features/bluebikes/utils/trips";
 
 export function links() {
   return [{ rel: "stylesheet", href: styles }];
@@ -32,11 +35,30 @@ const StationsPage = () => {
   const stationLocations = getStationLocationsForTrips(trips, stations);
   console.log({ stationLocations });
   console.log({ trips });
-  console.log({ stations });
+
+  const tripsByDate = getTripsByDate(trips, stations);
+  console.log({ tripsByDate });
 
   return (
     <div>
       <StationMap stations={stationLocations} mapboxToken={mapboxToken} />
+      <h1>Stations By Day</h1>
+      {Object.values(tripsByDate)
+        .filter((tripsOnDay) => tripsOnDay.length >= 3)
+        .map((tripsOnDay) => {
+          const startStations = tripsOnDay.map((trip) => trip.startStation);
+
+          return (
+            <div className="w-[500px]">
+              <h1>{tripsOnDay[0].startTime}</h1>
+              <StationMap
+                stations={startStations}
+                mapboxToken={mapboxToken}
+                height={400}
+              />
+            </div>
+          );
+        })}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import _ from "lodash";
 
 import { Trips } from "app/models/bluebikes/trips.server";
 import { Stations } from "app/models/bluebikes/stations.server";
+import { timeFormat } from "d3-time-format";
 
 const getUniqueStationNames = (trips: Trips) => {
   const stationsSet = new Set<string>();
@@ -26,4 +27,30 @@ export const getStationLocationsForTrips = (
   });
 
   return stationsWithLocations.filter(Boolean);
+};
+
+const appendStationDataToTrip = (trips: Trips, stations: Stations) => {
+  const stationsByName = _.keyBy(stations, "name");
+
+  return trips.map((trip) => {
+    return {
+      ...trip,
+      startStation: stationsByName[trip.startStationName],
+      endStation: stationsByName[trip.endStationName],
+    };
+  });
+};
+
+const getDateKey = (dateString: string) => {
+  const formatTime = timeFormat("%m/%d/%Y");
+
+  return formatTime(new Date(dateString));
+};
+
+export const getTripsByDate = (trips: Trips, stations: Stations) => {
+  const tripWithStationData = appendStationDataToTrip(trips, stations);
+
+  return _.groupBy(tripWithStationData, (trip) => {
+    return getDateKey(trip.startTime);
+  });
 };
