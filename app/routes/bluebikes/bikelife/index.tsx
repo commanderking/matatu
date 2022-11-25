@@ -44,7 +44,7 @@ const StationsPage = () => {
       <StationMap stations={stationLocations} mapboxToken={mapboxToken} />
       <h1>Stations By Day</h1>
       {Object.values(tripsByDate)
-        .filter((tripsOnDay) => tripsOnDay.length >= 5)
+        .filter((tripsOnDay) => tripsOnDay.length >= 3)
         .map((tripsOnDay) => {
           const startStations = tripsOnDay.map((trip) => trip.startStation);
 

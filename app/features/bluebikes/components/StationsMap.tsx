@@ -31,13 +31,14 @@ const StationsMap = ({
         mapStyle="mapbox://styles/mapbox/light-v10"
         mapboxAccessToken={mapboxToken}
       >
-        {stations.map((station) => {
+        {stations.map((station, index) => {
           return (
             <Marker
               longitude={station.longitude}
               latitude={station.latitude}
               anchor="center"
             >
+              <span>{index + 1}</span>
               <svg width={10} height={10}>
                 <circle r={5} fill="lightblue" stroke="black" cx={5} cy={5} />
               </svg>
