@@ -38,10 +38,8 @@ const Intro = () => {
             arrangement, fresh conversations would sprout.
           </p>
           <p className="mt-4">
-            The following visualization shows where each person sat on each trip
-            over a nine day period. It also aggregates the frequency each rider
-            sat in a particular space to show where each rider spent most of
-            their time when riding in the Prado.
+            The following visualization shows how often each rider sat in each
+            seat.
           </p>
         </div>
       </div>
