@@ -38,9 +38,8 @@ const Intro = () => {
             arrangement, fresh conversations would sprout.
           </p>
           <p className="mt-4">
-            The following visualization shows the frequency each rider sat in a
-            particular seat to show where each rider spent most of their time
-            when riding through the Kenyan savanna.
+            The following visualization shows how often each rider sat in each
+            seat.
           </p>
         </div>
       </div>
