@@ -9,9 +9,7 @@ import { useLoaderData } from "@remix-run/react";
 import { useOptionalUser } from "~/utils";
 import { formatTrips, getHeatMap } from "~/features/kenya/utils/trip";
 import ToyotaPradoHeatMap from "~/features/kenya/components/ToyotaPradoHeatMap";
-import TripInfo from "~/features/kenya/components/TripInfo";
 import Intro from "~/features/kenya/components/Intro";
-import TripMedia from "~/features/kenya/components/TripMedia";
 import DailyTrips from "app/features/kenya/components/DailyTrips";
 
 export async function loader({ request, params }: LoaderArgs) {
@@ -71,15 +69,18 @@ export default function Kenya() {
         <p className="text-2xl">{name} Seating Heat Map</p>
         <ToyotaPradoHeatMap heatMap={seats} />
       </div>
-      {formattedData.map((tripsInDay) => {
-        return (
-          <DailyTrips
-            key={tripsInDay.date}
-            tripsInDay={tripsInDay}
-            selectedRiderId={selectedRiderId}
-          />
-        );
-      })}
+      <div className="m-auto mt-32 max-w-[960px]">
+        <h1 className="bg-slate-100 p-4 text-4xl">Daily Log</h1>
+        {formattedData.map((tripsInDay) => {
+          return (
+            <DailyTrips
+              key={tripsInDay.date}
+              tripsInDay={tripsInDay}
+              selectedRiderId={selectedRiderId}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
